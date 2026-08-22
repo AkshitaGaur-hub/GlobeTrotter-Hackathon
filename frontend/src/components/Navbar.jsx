@@ -149,8 +149,88 @@ export default function Navbar() {
               </>
             )}
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl absolute w-full left-0 z-50">
+          <div className="px-4 pt-2 pb-6 space-y-1">
+            {isAuthenticated ? (
+              <>
+                <div className="flex items-center gap-3 px-3 py-4 border-b border-slate-100 dark:border-slate-800 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+                    <img src={`https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=0D8ABC&color=fff`} alt="Avatar" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-slate-900 dark:text-white">{user?.name}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{user?.email}</p>
+                  </div>
+                </div>
+                
+                <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">
+                  <Globe className="w-5 h-5" /> Dashboard
+                </Link>
+                <Link to="/search" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">
+                  <Search className="w-5 h-5" /> Search
+                </Link>
+                <Link to="/trips" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">
+                  <Map className="w-5 h-5" /> My Trips
+                </Link>
+                <Link to="/calendar" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">
+                  <CalendarDays className="w-5 h-5" /> Calendar
+                </Link>
+                <Link to="/community" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">
+                  <MessageSquare className="w-5 h-5" /> Community
+                </Link>
+
+                {user?.is_admin && (
+                  <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg mt-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+                    <Shield className="w-5 h-5" /> Admin Dashboard
+                  </Link>
+                )}
+
+                <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-3 py-3 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg border-t border-slate-100 dark:border-slate-800 mt-2 pt-3">
+                  <User className="w-5 h-5" /> Profile
+                </Link>
+                
+                <Link to="/trips/new" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center gap-2 mt-4 px-4 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 w-full">
+                  <PlusCircle className="w-5 h-5" /> Plan New Trip
+                </Link>
+                
+                <button onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }} className="flex items-center gap-3 w-full text-left px-3 py-3 mt-4 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg border-t border-slate-100 dark:border-slate-800 pt-4">
+                  <LogOut className="w-5 h-5" /> Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-3 text-center text-slate-600 dark:text-slate-300 font-medium">
+                  Log in
+                </Link>
+                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="block mt-2 px-3 py-3 text-center bg-blue-600 text-white font-medium rounded-lg">
+                  Sign up
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
