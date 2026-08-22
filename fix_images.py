@@ -24,3 +24,4 @@ for directory in directories:
                 with open(filepath, 'w', encoding='utf-8') as f:
                     f.write(new_content)
                 print(f'Updated {filename}')
+
