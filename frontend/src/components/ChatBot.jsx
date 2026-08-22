@@ -25,14 +25,24 @@ export default function ChatBot() {
     
     // Add user message
     const newMsg = { id: Date.now(), text: input, sender: 'user' };
+    const userText = input.toLowerCase();
     setMessages(prev => [...prev, newMsg]);
     setInput('');
     
-    // Mock bot response
+    // Mock bot response logic
     setTimeout(() => {
+      let botResponse = "I'm a demo assistant! Since this is a hackathon MVP, I'm still learning, but I'll make sure to note that down for your travels!";
+      
+      // Keyword matching for Taj Mahal ticket prices
+      if (userText.includes('taj') && (userText.includes('ticket') || userText.includes('price') || userText.includes('cost') || userText.includes('fee'))) {
+        botResponse = "The ticket price for the Taj Mahal is ₹50 for Indian citizens and ₹1,100 for foreign tourists. There is an additional optional ₹200 fee if you wish to enter the main mausoleum. Children under 15 years enter free!";
+      } else if (userText.includes('hi') || userText.includes('hello')) {
+        botResponse = "Hello! Where are you planning to travel next?";
+      }
+
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
-        text: "I'm a demo assistant! Since this is a hackathon MVP, I'm still learning, but I'll make sure to note that down for your travels!",
+        text: botResponse,
         sender: 'bot'
       }]);
     }, 1000);
@@ -96,3 +106,4 @@ export default function ChatBot() {
     </div>
   );
 }
+
