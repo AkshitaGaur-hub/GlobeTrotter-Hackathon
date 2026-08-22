@@ -13,7 +13,7 @@ export default function Community() {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
-  const [postData, setPostData] = useState({ content: "", destination: "", image: "" });
+  const [postData, setPostData] = useState({ content: "", destination: "", image_url: "" });
 
   const [expandedComments, setExpandedComments] = useState({});
   const [newComments, setNewComments] = useState({});
@@ -49,12 +49,17 @@ export default function Community() {
         const res = await api.updatePost(editingPost.id, postData);
         setPosts(posts.map(p => p.id === editingPost.id ? { ...p, ...res.post } : p));
       } else {
-        const res = await api.createPost({ ...postData, user: { id: user?.id, name: user?.name || "Anonymous" }});
+        const res = await api.createPost({ destination: postData.destination, content: postData.content, image_url: postData.image_url });
+        res.post.author_name = user?.name || "Anonymous";
+        res.post.author_avatar = user?.avatar_url;
+        res.post.like_count = 0;
+        res.post.comment_count = 0;
+        res.post.user_liked = false;
         setPosts([res.post, ...posts]);
       }
       setIsModalOpen(false);
       setEditingPost(null);
-      setPostData({ content: "", destination: "", image: "" });
+      setPostData({ content: "", destination: "", image_url: "" });
     } catch (err) {
       console.error(err);
     }
@@ -105,7 +110,7 @@ export default function Community() {
         [`${postId}_data`]: [...(prev[`${postId}_data`] || []), res.comment]
       }));
       setNewComments({ ...newComments, [postId]: "" });
-      setPosts(posts.map(p => p.id === postId ? { ...p, comments: p.comments + 1 } : p));
+      setPosts(posts.map(p => p.id === postId ? { ...p, comment_count: parseInt(p.comment_count || 0) + 1 } : p));
     } catch (err) {
       console.error(err);
     }
@@ -114,18 +119,19 @@ export default function Community() {
   const filteredPosts = posts
     .filter(p => p.content?.toLowerCase().includes(searchTerm.toLowerCase()) || p.destination?.toLowerCase().includes(searchTerm.toLowerCase()))
     .filter(p => filterDestination ? p.destination?.toLowerCase().includes(filterDestination.toLowerCase()) : true)
-      setPosts(posts.map(p => p.id === postId ? { ...p, comment_count: parseInt(p.comment_count || 0) + 1 } : p));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    .sort((a, b) => {
+      if (sortBy === "newest") return new Date(b.created_at) - new Date(a.created_at);
+      if (sortBy === "likes") return b.likes - a.likes;
+      return 0;
+    });
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      {/* Header & Controls */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Community</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Discover and share travel experiences</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Travel Community</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">Share your experiences and get inspired.</p>
         </div>
         <button 
           onClick={() => {
@@ -140,29 +146,29 @@ export default function Community() {
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="flex-1 relative">
-          <Search className="w-5 h-5 text-slate-400 absolute left-3 top-2.5" />
+      <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        <div className="relative flex-1">
+          <Search className="w-5 h-5 absolute left-3 top-2.5 text-slate-400" />
           <input 
-            type="text" 
-            placeholder="Search experiences..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            placeholder="Search posts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <div className="relative">
-            <MapPin className="w-5 h-5 text-slate-400 absolute left-3 top-2.5" />
+            <Filter className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
             <select 
               value={filterDestination}
               onChange={(e) => setFilterDestination(e.target.value)}
               className="pl-9 pr-8 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg appearance-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All Destinations</option>
-              <option value="Japan">Japan</option>
-              <option value="Europe">Europe</option>
-              <option value="Bali">Bali</option>
+              <option value="paris">Paris</option>
+              <option value="kyoto">Kyoto</option>
+              <option value="new york">New York</option>
             </select>
           </div>
           <select 
@@ -171,16 +177,17 @@ export default function Community() {
             className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             <option value="newest">Newest First</option>
-            <option value="most_liked">Most Liked</option>
+            <option value="likes">Most Liked</option>
           </select>
         </div>
       </div>
 
+      {/* Feed */}
       {isLoading ? (
-        <div className="flex justify-center py-20">
+        <div className="flex justify-center items-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
-      ) : posts.length === 0 ? (
+      ) : filteredPosts.length === 0 ? (
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-12 text-center">
           <MessageCircle className="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No travel experiences yet</h3>
@@ -188,33 +195,25 @@ export default function Community() {
         </div>
       ) : (
         <div className="space-y-6">
-          {posts.map(post => (
+          {filteredPosts.map(post => (
             <div key={post.id} className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
               <div className="p-4 sm:p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
-                      <img src={post.author_avatar || `https://ui-avatars.com/api/?name=${post.author_name || 'User'}&background=random`} alt="Avatar" className="w-full h-full object-cover" />
+                      <img src={`https://ui-avatars.com/api/?name=${post.author_name || 'User'}&background=random`} alt="Avatar" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white">{post.author_name || 'Anonymous User'}</h4>
-                      <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                        <span>{new Date(post.created_at).toLocaleDateString()}</span>
-                        {post.destination && (
-                          <>
-                            <span>•</span>
-                            <span className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
-                              <MapPin className="w-3 h-3 mr-0.5" />
-                              {post.destination}
-                            </span>
-                          </>
-                        )}
+                      <h4 className="font-semibold text-slate-900 dark:text-white">{post.author_name}</h4>
+                      <div className="flex items-center text-xs text-slate-500 dark:text-slate-400 gap-2 mt-0.5">
+                        <span className="flex items-center"><MapPin className="w-3 h-3 mr-0.5" /> {post.destination || 'Unknown Location'}</span>
+                        <span className="flex items-center"><Clock className="w-3 h-3 mr-0.5" /> {new Date(post.created_at).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
                   {user?.id === post.user_id && (
                     <div className="flex gap-2">
-                      <button onClick={() => { setEditingPost(post); setPostData({ destination: post.destination || '', content: post.content || '', image_url: post.image_url || '' }); setIsModalOpen(true); }} className="p-1.5 text-slate-400 hover:text-blue-600 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                      <button onClick={() => { setEditingPost(post); setPostData(post); setIsModalOpen(true); }} className="p-1.5 text-slate-400 hover:text-blue-600 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button onClick={() => handleDelete(post.id)} className="p-1.5 text-slate-400 hover:text-red-600 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
@@ -232,34 +231,29 @@ export default function Community() {
                   </div>
                 )}
                 
-                <div className="flex items-center gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <button 
-                    onClick={() => handleToggleLike(post.id)}
-                    className={`flex items-center gap-2 font-medium transition-colors ${post.user_liked ? 'text-red-500' : 'text-slate-500 hover:text-red-500'}`}
-                  >
-                    <Heart className={`w-5 h-5 ${post.user_liked ? 'fill-current' : ''}`} />
-                    <span>{post.like_count || 0}</span>
+                <div className="flex items-center gap-6 border-t border-slate-100 dark:border-slate-800 pt-4">
+                  <button onClick={() => handleLike(post.id)} className="flex items-center gap-1.5 text-slate-500 hover:text-red-500 transition-colors group">
+                    <Heart className={`w-5 h-5 group-hover:fill-current`} />
+                    <span className="font-medium">{post.like_count}</span>
                   </button>
-                  <button 
-                    onClick={() => toggleComments(post.id)}
-                    className="flex items-center gap-2 text-slate-500 hover:text-blue-600 font-medium transition-colors"
-                  >
+                  <button onClick={() => toggleComments(post.id)} className="flex items-center gap-1.5 text-slate-500 hover:text-blue-600 transition-colors">
                     <MessageCircle className="w-5 h-5" />
-                    <span>{post.comment_count || 0}</span>
+                    <span className="font-medium">{post.comment_count}</span>
                   </button>
                 </div>
               </div>
 
+              {/* Comments Section */}
               {expandedComments[post.id] && (
                 <div className="bg-slate-50 dark:bg-slate-800/50 p-4 sm:p-6 border-t border-slate-100 dark:border-slate-800">
                   <div className="space-y-4 mb-4">
                     {expandedComments[`${post.id}_data`]?.map((comment, idx) => (
-                      <div key={comment.id || idx} className="flex gap-3">
+                      <div key={idx} className="flex gap-3">
                          <div className="w-8 h-8 rounded-full bg-slate-200 shrink-0 overflow-hidden">
-                           <img src={comment.author_avatar || `https://ui-avatars.com/api/?name=${comment.author_name || 'User'}&background=random`} alt="Avatar" className="w-full h-full object-cover" />
+                           <img src={`https://ui-avatars.com/api/?name=${comment.author_name || 'User'}&background=random`} alt="Avatar" className="w-full h-full object-cover" />
                          </div>
                          <div className="flex-1 bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
-                           <h5 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{comment.author_name || 'Anonymous User'}</h5>
+                           <h5 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{comment.author_name || 'User'}</h5>
                            <p className="text-sm text-slate-700 dark:text-slate-300">{comment.content}</p>
                          </div>
                       </div>
@@ -268,7 +262,7 @@ export default function Community() {
                   <div className="flex gap-2">
                     <input 
                       type="text" 
-                      placeholder="Write a comment..."
+                      placeholder="Add a comment..." 
                       value={newComments[post.id] || ""}
                       onChange={(e) => setNewComments({...newComments, [post.id]: e.target.value})}
                       className="flex-1 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-900"
@@ -284,11 +278,15 @@ export default function Community() {
         </div>
       )}
 
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
           <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 w-full max-w-lg overflow-hidden">
             <div className="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white">{editingPost ? 'Edit Experience' : 'Share Experience'}</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <Trash2 className="w-5 h-5 hidden" />&times;
+              </button>
             </div>
             <div className="p-6 space-y-4">
               <div>
