@@ -1,268 +1,183 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  Calendar, MapPin, Share2, Sparkles, ArrowLeft,
-  Award, Wallet, RefreshCw, Check, Copy, ExternalLink, Trash2
-} from "lucide-react";
-import api from "../services/api";
-import GlobeScore from "../components/GlobeScore";
-import BudgetCard from "../components/BudgetCard";
-import BudgetChart from "../components/BudgetChart";
-import Timeline from "../components/Timeline";
-import WhatIfPanel from "../components/WhatIfPanel";
-import Modal from "../components/Modal";
-import LoadingState from "../components/LoadingState";
-import ErrorState from "../components/ErrorState";
+import React, { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Plus, Trash2, Calendar, DollarSign, GripVertical, Save, Share2, MapPin } from "lucide-react";
 
 export default function ItineraryDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
-  const [trip, setTrip] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const [isWhatIfOpen, setIsWhatIfOpen] = useState(false);
-  const [isShareOpen, setIsShareOpen] = useState(false);
-  const [copiedShare, setCopiedShare] = useState(false);
-
-  const loadTrip = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await api.getTripById(id);
-      setTrip(res.trip);
-    } catch (err) {
-      setError(err.message || "Failed to load itinerary.");
-    } finally {
-      setIsLoading(false);
+  // We transition from a flat "day by day timeline" to editable sections
+  const [sections, setSections] = useState([
+    {
+      id: "sec-1",
+      title: "Section 1",
+      description: "Explore the historic city center and visit the main monuments.",
+      startDate: "2026-08-20",
+      endDate: "2026-08-22",
+      budget: "500",
+      location: "Paris Center"
+    },
+    {
+      id: "sec-2",
+      title: "Section 2",
+      description: "Day trip to Versailles and surrounding wine regions.",
+      startDate: "2026-08-23",
+      endDate: "2026-08-24",
+      budget: "350",
+      location: "Versailles"
     }
+  ]);
+
+  const addSection = () => {
+    const newSection = {
+      id: `sec-${Date.now()}`,
+      title: `Section ${sections.length + 1}`,
+      description: "",
+      startDate: "",
+      endDate: "",
+      budget: "",
+      location: ""
+    };
+    setSections([...sections, newSection]);
   };
 
-  useEffect(() => {
-    loadTrip();
-  }, [id]);
-
-  const handleOptimizationApplied = (updatedTrip) => {
-    setTrip(updatedTrip);
+  const removeSection = (idToRemove) => {
+    setSections(sections.filter(s => s.id !== idToRemove));
   };
 
-  const handleCopyShareLink = () => {
-    const shareUrl = `${window.location.origin}/share/${trip.share_slug || trip.id}`;
-    navigator.clipboard.writeText(shareUrl);
-    setCopiedShare(true);
-    setTimeout(() => setCopiedShare(false), 2500);
+  const updateSection = (id, field, value) => {
+    setSections(sections.map(sec => 
+      sec.id === id ? { ...sec, [field]: value } : sec
+    ));
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this trip?")) return;
-    try {
-      await api.deleteTrip(trip.id);
-      navigate("/dashboard");
-    } catch (err) {
-      alert("Failed to delete trip: " + err.message);
-    }
-  };
-
-  if (isLoading) {
-    return <LoadingState message="Loading your customized itinerary..." />;
-  }
-
-  if (error || !trip) {
-    return <ErrorState message={error || "Trip not found"} onRetry={loadTrip} />;
-  }
-
-  const start = new Date(trip.start_date);
-  const end = new Date(trip.end_date);
-  const dateRange = `${start.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} — ${end.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
-
-  const formatINR = (val) => "₹" + Math.round(val || 0).toLocaleString("en-IN");
+  const totalBudget = sections.reduce((sum, sec) => sum + (parseFloat(sec.budget) || 0), 0);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
-      {/* Top Back & Action Bar */}
-      <div className="flex items-center justify-between gap-4">
-        <Link
-          to="/dashboard"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Trips</span>
-        </Link>
-
-        <div className="flex items-center gap-2">
-          {/* Share Button */}
-          <button
-            onClick={() => setIsShareOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-sm transition-colors"
-          >
-            <Share2 className="w-3.5 h-3.5 text-slate-500" />
-            <span>Share Trip</span>
-          </button>
-
-          {/* Delete */}
-          <button
-            onClick={handleDelete}
-            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:bg-rose-50 shadow-sm transition-colors"
-            title="Delete Trip"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Hero Trip Title Card */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-brand-950 text-white p-6 sm:p-10 shadow-xl border border-slate-800">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-brand-500/15 rounded-full blur-3xl" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-extrabold uppercase tracking-wider flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" />
-                {dateRange}
-              </span>
-              <span className="px-2.5 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold">
-                {trip.durationDays} Days • {trip.travelers_count || 1} Travelers
-              </span>
-              <span className="px-2.5 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold">
-                {trip.travel_style} Pace
-              </span>
-            </div>
-
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              {trip.name}
-            </h1>
-
-            {trip.description && (
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 line-clamp-2 leading-relaxed">
-                {trip.description}
-              </p>
-            )}
-
-            {/* Route Stops Pills */}
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              {trip.stops?.map((stop, sIdx) => (
-                <span
-                  key={`stop-pill-${sIdx}`}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-white/15 backdrop-blur-md text-white text-xs font-bold"
-                >
-                  <MapPin className="w-3 h-3 text-brand-400" />
-                  {stop.city_name || stop.name}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Hero Actions & GlobeScore Highlight */}
-          <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-3 shrink-0">
-            {/* Quick Metrics */}
-            <div className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/10 text-right w-full sm:w-auto">
-              <p className="text-[11px] uppercase font-semibold text-slate-300">Total Estimated Cost</p>
-              <p className="text-2xl sm:text-3xl font-extrabold text-amber-300">
-                {formatINR(trip.total_estimated_cost)}
-              </p>
-              <p className="text-[11px] text-slate-400 mt-0.5">Target Budget: {formatINR(trip.budget)}</p>
-            </div>
-
-            {/* HERO WHAT-IF BUTTON */}
-            <button
-              onClick={() => setIsWhatIfOpen(true)}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-brand-500 to-amber-500 hover:from-brand-400 hover:to-amber-400 text-white font-extrabold text-sm shadow-lg shadow-brand-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-200"
-            >
-              <Sparkles className="w-4 h-4 text-amber-100" />
-              <span>What If? (Optimize Trip)</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Grid Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left 7 Cols: Vertical Itinerary Timeline */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold tracking-tight text-slate-900">
-              Daily Itinerary Timeline
-            </h2>
-            <span className="text-xs text-slate-500">
-              {trip.activities?.length || 0} scheduled experiences
-            </span>
-          </div>
-
-          <Timeline days={trip.itineraryDays} />
-        </div>
-
-        {/* Right 5 Cols: GlobeScore & Budget Analytics */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* GlobeScore Gauge */}
-          <GlobeScore globeScoreData={trip.globe_score_data} />
-
-          {/* Budget Financials */}
-          <BudgetCard budgetData={trip.budget_data} />
-
-          {/* Cost Category Donut Chart */}
-          <BudgetChart budgetData={trip.budget_data} />
-        </div>
-      </div>
-
-      {/* What-If Optimization Modal */}
-      <WhatIfPanel
-        isOpen={isWhatIfOpen}
-        onClose={() => setIsWhatIfOpen(false)}
-        currentTrip={trip}
-        onOptimizationApplied={handleOptimizationApplied}
-      />
-
-      {/* Public Share Modal */}
-      <Modal
-        isOpen={isShareOpen}
-        onClose={() => setIsShareOpen(false)}
-        title="Share Your GlobeTrotter Itinerary"
-        maxWidth="max-w-md"
-      >
-        <div className="space-y-4">
-          <p className="text-xs text-slate-500 leading-relaxed">
-            Anyone with this link can view the read-only itinerary, budget breakdown, and GlobeScore.
+    <div className="max-w-4xl mx-auto px-4 py-8 pb-24">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900">Trip Itinerary</h1>
+          <p className="text-slate-500 mt-1 flex items-center">
+            <MapPin className="w-4 h-4 mr-1" /> Multi-City Journey
           </p>
-
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200">
-            <input
-              type="text"
-              readOnly
-              value={`${window.location.origin}/share/${trip.share_slug || trip.id}`}
-              className="bg-transparent text-xs text-slate-700 font-mono flex-1 outline-none px-2 select-all"
-            />
-            <button
-              onClick={handleCopyShareLink}
-              className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors flex items-center gap-1 shrink-0"
-            >
-              {copiedShare ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          <div className="pt-2 flex justify-end">
-            <Link
-              to={`/share/${trip.share_slug || trip.id}`}
-              target="_blank"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700"
-            >
-              <span>Preview Public View</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </Link>
-          </div>
         </div>
-      </Modal>
+        <div className="flex items-center gap-3">
+          <div className="px-4 py-2 bg-green-50 text-green-700 rounded-lg font-semibold flex items-center border border-green-200">
+            <DollarSign className="w-4 h-4 mr-1" />
+            Total Budget: ${totalBudget.toFixed(2)}
+          </div>
+          <button className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Share Trip">
+            <Share2 className="w-5 h-5" />
+          </button>
+          <button className="flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            <Save className="w-4 h-4 mr-2" />
+            Save Plan
+          </button>
+        </div>
+      </div>
+
+      {/* Sections List */}
+      <div className="space-y-6">
+        {sections.map((section, index) => (
+          <div key={section.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col md:flex-row gap-6 relative group">
+            
+            {/* Drag Handle & Delete (Desktop) */}
+            <div className="hidden md:flex flex-col items-center justify-between py-2 text-slate-300">
+              <GripVertical className="w-5 h-5 cursor-grab hover:text-slate-500" />
+              <button 
+                onClick={() => removeSection(section.id)}
+                className="text-slate-300 hover:text-red-500 transition-colors mt-auto"
+                title="Remove Section"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 space-y-4">
+              <div className="flex justify-between items-center md:block">
+                <input
+                  type="text"
+                  value={section.title}
+                  onChange={(e) => updateSection(section.id, 'title', e.target.value)}
+                  className="text-xl font-bold text-slate-900 border-none p-0 focus:ring-0 bg-transparent hover:bg-slate-50 rounded px-2 -ml-2 transition-colors w-1/2"
+                />
+                {/* Mobile delete */}
+                <button 
+                  onClick={() => removeSection(section.id)}
+                  className="md:hidden text-slate-400 hover:text-red-500"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Description & Plans</label>
+                <textarea
+                  value={section.description}
+                  onChange={(e) => updateSection(section.id, 'description', e.target.value)}
+                  rows="3"
+                  className="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                  placeholder="What are the main activities for this section?"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Date Range</label>
+                  <div className="flex items-center space-x-2">
+                    <div className="relative flex-1">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Calendar className="w-4 h-4 text-slate-400" />
+                      </div>
+                      <input
+                        type="date"
+                        value={section.startDate}
+                        onChange={(e) => updateSection(section.id, 'startDate', e.target.value)}
+                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <span className="text-slate-400">to</span>
+                    <div className="relative flex-1">
+                      <input
+                        type="date"
+                        value={section.endDate}
+                        onChange={(e) => updateSection(section.id, 'endDate', e.target.value)}
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Section Budget</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <DollarSign className="w-4 h-4 text-slate-400" />
+                    </div>
+                    <input
+                      type="number"
+                      value={section.budget}
+                      onChange={(e) => updateSection(section.id, 'budget', e.target.value)}
+                      placeholder="0.00"
+                      className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button 
+        onClick={addSection}
+        className="mt-8 w-full py-4 border-2 border-dashed border-slate-300 rounded-2xl text-slate-500 font-medium hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 flex items-center justify-center transition-all"
+      >
+        <Plus className="w-5 h-5 mr-2" />
+        Add another Section
+      </button>
+
     </div>
   );
 }

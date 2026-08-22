@@ -8,6 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import TripPlanner from "./pages/TripPlanner";
 import ItineraryDetails from "./pages/ItineraryDetails";
 import PublicShare from "./pages/PublicShare";
+import MyTrips from "./pages/MyTrips";
+import Profile from "./pages/Profile";
+import Search from "./pages/Search";
 import LoadingState from "./components/LoadingState";
 
 function ProtectedRoute({ children }) {
@@ -73,6 +76,30 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/trips"
+                element={
+                  <ProtectedRoute>
+                    <MyTrips />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <ProtectedRoute>
+                    <Search />
                   </ProtectedRoute>
                 }
               />
