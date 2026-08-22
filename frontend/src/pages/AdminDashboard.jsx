@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { Users, Map, MessageSquare, DollarSign, TrendingUp, BarChart3, Shield } from "lucide-react";
+import { Users, Map, MessageSquare, DollarSign, TrendingUp, BarChart3, Shield, Database } from "lucide-react";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
@@ -185,7 +185,18 @@ export default function AdminDashboard() {
             </ResponsiveContainer>
           </div>
         </div>
+      </div>
 
+      {/* Raw JSON Data */}
+      <div className="mt-8 bg-slate-900 rounded-xl shadow-sm border border-slate-700 p-6 overflow-hidden">
+        <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <Database className="w-5 h-5" /> Raw JSON Data
+        </h3>
+        <div className="bg-black/50 p-4 rounded-lg overflow-x-auto">
+          <pre className="text-emerald-400 text-sm font-mono whitespace-pre-wrap">
+            {JSON.stringify({ stats, charts }, null, 2)}
+          </pre>
+        </div>
       </div>
     </div>
   );

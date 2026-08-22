@@ -147,14 +147,20 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recentTrips.length > 0 ? recentTrips.map(trip => (
+            {recentTrips.length > 0 ? recentTrips.map((trip, idx) => {
+              const fallbackImages = [
+                'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80'
+              ];
+              return (
               <Link 
                 key={trip.id} 
                 to={`/trips/${trip.share_slug || trip.id}`}
                 className="flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow group"
               >
                 <div className="h-48 w-full relative overflow-hidden">
-                  <img src={trip.image_url || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'} alt={trip.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={trip.image_url || fallbackImages[idx % fallbackImages.length]} alt={trip.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 truncate group-hover:text-blue-600 transition-colors">{trip.name}</h3>
@@ -164,7 +170,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               </Link>
-            )) : (
+            )}) : (
               <div className="col-span-3 text-center py-10 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
                 <p className="text-slate-500 dark:text-slate-400">You haven't planned any trips yet.</p>
                 <Link to="/trips/new" className="text-blue-600 font-medium hover:underline mt-2 inline-block">Start your first adventure</Link>
