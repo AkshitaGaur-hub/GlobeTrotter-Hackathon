@@ -67,6 +67,45 @@ export async function login(req, res, next) {
   }
 }
 
-export async function getMe(req, res) {
-  res.json({ user: req.user });
+export async function getMe(req, res, next) {
+  try {
+    const userRes = await pool.query(
+      "SELECT id, name, email, is_admin, avatar_url, bio, location, created_at FROM users WHERE id = $1",
+      [req.user.id]
+    );
+    res.json({ user: userRes.rows[0] });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateProfile(req, res, next) {
+  try {
+    const { name, bio, location, avatar_url } = req.body;
+    const result = await pool.query(
+      `UPDATE users SET name = COALESCE($1, name), bio = COALESCE($2, bio), location = COALESCE($3, location), avatar_url = COALESCE($4, avatar_url)
+       WHERE id = $5 RETURNING id, name, email, bio, location, avatar_url, is_admin`,
+      [name, bio, location, avatar_url, req.user.id]
+    );
+    res.json({ user: result.rows[0] });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getUserProfile(req, res, next) {
+  try {
+    const { userId } = req.params;
+    const userRes = await pool.query(
+      `SELECT id, name, email, avatar_url, bio, location, created_at,
+        (SELECT COUNT(*) FROM trips WHERE user_id = $1) as trip_count,
+        (SELECT COUNT(*) FROM community_posts WHERE author_id = $1) as post_count
+       FROM users WHERE id = $1`,
+      [userId]
+    );
+    if (userRes.rows.length === 0) return res.status(404).json({ error: "User not found" });
+    res.json({ user: userRes.rows[0] });
+  } catch (err) {
+    next(err);
+  }
 }

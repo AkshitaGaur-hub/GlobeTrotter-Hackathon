@@ -7,8 +7,8 @@ export default function ErrorState({ message = "An unexpected error occurred.", 
       <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 mb-4 shadow-sm">
         <AlertTriangle className="w-6 h-6" />
       </div>
-      <h3 className="text-base font-bold text-slate-900 mb-1">Something went wrong</h3>
-      <p className="text-xs text-slate-600 mb-6 leading-relaxed">{message}</p>
+      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">Something went wrong</h3>
+      <p className="text-xs text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}

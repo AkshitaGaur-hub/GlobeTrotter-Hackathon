@@ -15,9 +15,9 @@ export default function ActivityCard({ activity }) {
   };
 
   const catStyle = categoryColors[activity.category] || {
-    bg: "bg-slate-100",
-    text: "text-slate-700",
-    border: "border-slate-200"
+    bg: "bg-slate-100 dark:bg-slate-800",
+    text: "text-slate-700 dark:text-slate-300",
+    border: "border-slate-200 dark:border-slate-700"
   };
 
   const formatCost = (val) => {
@@ -32,12 +32,12 @@ export default function ActivityCard({ activity }) {
     return hours % 1 === 0 ? `${hours}h` : `${hours.toFixed(1)}h`;
   };
 
-  const fallbackImage = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80";
+  const fallbackImage = "https://picsum.photos/seed/globetrotter130/800/600";
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col sm:flex-row gap-4">
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700/80 p-4 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col sm:flex-row gap-4">
       {/* Thumbnail */}
-      <div className="relative w-full sm:w-32 h-28 shrink-0 rounded-lg overflow-hidden bg-slate-100">
+      <div className="relative w-full sm:w-32 h-28 shrink-0 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
         <img
           src={imgError ? fallbackImage : (activity.image_url || fallbackImage)}
           alt={activity.name}
@@ -58,19 +58,19 @@ export default function ActivityCard({ activity }) {
               {activity.category}
             </span>
             {activity.city_name && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 <MapPin className="w-3 h-3" />
                 {activity.city_name}
               </span>
             )}
           </div>
 
-          <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+          <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
             {activity.name}
           </h4>
 
           {activity.description && (
-            <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
               {activity.description}
             </p>
           )}
@@ -84,7 +84,7 @@ export default function ActivityCard({ activity }) {
         </div>
 
         {/* Footer info: Duration & Cost */}
-        <div className="flex items-center justify-between pt-3 mt-2 border-t border-slate-100 text-xs font-semibold text-slate-600">
+        <div className="flex items-center justify-between pt-3 mt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-400">
           <div className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5 text-slate-400" />
             <span>{formatDuration(activity.duration_minutes)}</span>

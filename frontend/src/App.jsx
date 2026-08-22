@@ -11,6 +11,9 @@ import PublicShare from "./pages/PublicShare";
 import MyTrips from "./pages/MyTrips";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
+import Calendar from "./pages/Calendar";
+import Community from "./pages/Community";
+import AdminDashboard from "./pages/AdminDashboard";
 import LoadingState from "./components/LoadingState";
 
 function ProtectedRoute({ children }) {
@@ -45,7 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white">
           <Navbar />
           <main className="flex-1">
             <Routes>
@@ -100,6 +103,30 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Search />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/calendar"
+                element={
+                  <ProtectedRoute>
+                    <Calendar />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/community"
+                element={
+                  <ProtectedRoute>
+                    <Community />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
                   </ProtectedRoute>
                 }
               />

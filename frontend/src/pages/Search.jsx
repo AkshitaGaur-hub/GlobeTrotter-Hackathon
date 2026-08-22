@@ -47,7 +47,7 @@ export default function Search() {
     <div className="max-w-5xl mx-auto px-4 py-8">
       {/* Search Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-6">Explore Destinations & Activities</h1>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Explore Destinations & Activities</h1>
         
         {/* Search Bar */}
         <div className="relative mb-4">
@@ -56,7 +56,7 @@ export default function Search() {
           </div>
           <input
             type="text"
-            className="block w-full pl-10 pr-3 py-4 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-lg shadow-sm"
+            className="block w-full pl-10 pr-3 py-4 border border-slate-300 dark:border-slate-600 rounded-xl leading-5 bg-white dark:bg-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-lg shadow-sm"
             placeholder="Search for cities, regions, or activities..."
             value={searchQuery}
             onChange={handleSearchChange}
@@ -65,13 +65,13 @@ export default function Search() {
 
         {/* Filters Row */}
         <div className="flex flex-wrap items-center gap-3">
-          <button className="flex items-center px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button className="flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800">
             <Filter className="w-4 h-4 mr-2" /> Group by
           </button>
-          <button className="flex items-center px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button className="flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800">
             <ListFilter className="w-4 h-4 mr-2" /> Filter
           </button>
-          <button className="flex items-center px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button className="flex items-center px-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800">
             <SlidersHorizontal className="w-4 h-4 mr-2" /> Sort by
           </button>
         </div>
@@ -79,35 +79,35 @@ export default function Search() {
 
       {/* Results List */}
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">
+        <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">
           {searchQuery ? `Results for "${searchQuery}"` : 'All Suggestions'} ({filteredResults.length})
         </h2>
         
         {filteredResults.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
+          <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
             <SearchIcon className="mx-auto h-12 w-12 text-slate-300 mb-4" />
-            <h3 className="text-lg font-medium text-slate-900">No results found</h3>
-            <p className="mt-1 text-slate-500">We couldn't find anything matching "{searchQuery}". Try a different location!</p>
+            <h3 className="text-lg font-medium text-slate-900 dark:text-white">No results found</h3>
+            <p className="mt-1 text-slate-500 dark:text-slate-400">We couldn't find anything matching "{searchQuery}". Try a different location!</p>
           </div>
         ) : (
           filteredResults.map(result => (
-            <div key={result.id} className="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+            <div key={result.id} className="flex flex-col sm:flex-row bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow">
               <div className="sm:w-64 h-40 sm:h-auto shrink-0">
                 <img src={result.image} alt={result.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex justify-between items-start">
-                    <h3 className="text-xl font-bold text-slate-900">{result.title}</h3>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{result.title}</h3>
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                       {result.type}
                     </span>
                   </div>
-                  <div className="flex items-center text-slate-500 text-sm mt-1 mb-2">
+                  <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm mt-1 mb-2">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span>{result.location}</span>
                   </div>
-                  <p className="text-slate-600 text-sm line-clamp-2">{result.description}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-2">{result.description}</p>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -115,7 +115,7 @@ export default function Search() {
                       <Star className="w-4 h-4 mr-1 fill-current" />
                       <span>{result.rating}</span>
                     </div>
-                    <div className="text-slate-700 text-sm font-medium">
+                    <div className="text-slate-700 dark:text-slate-300 text-sm font-medium">
                       {result.price}
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export default function Search() {
       {/* Details Modal */}
       {selectedResult && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 my-8">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 my-8">
             <button 
               onClick={() => setSelectedResult(null)}
               className="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
@@ -160,22 +160,22 @@ export default function Search() {
             </div>
             
             <div className="p-6">
-              <div className="flex items-center text-slate-500 font-medium mb-4">
+              <div className="flex items-center text-slate-500 dark:text-slate-400 font-medium mb-4">
                 <MapPin className="w-5 h-5 mr-1 text-blue-500" />
                 <span>{selectedResult.location}</span>
                 <span className="mx-3 text-slate-300">|</span>
-                <span className="text-slate-700 bg-slate-100 px-2 rounded font-semibold">{selectedResult.price}</span>
+                <span className="text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 rounded font-semibold">{selectedResult.price}</span>
               </div>
               
-              <h3 className="text-lg font-bold text-slate-900 mb-2">About</h3>
-              <p className="text-slate-600 leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">About</h3>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                 {selectedResult.fullDetails || selectedResult.description}
               </p>
 
-              <div className="mt-8 flex justify-end gap-3 border-t border-slate-100 pt-6">
+              <div className="mt-8 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800 pt-6">
                 <button 
                   onClick={() => setSelectedResult(null)}
-                  className="px-5 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition-colors"
+                  className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-200 transition-colors"
                 >
                   Close
                 </button>

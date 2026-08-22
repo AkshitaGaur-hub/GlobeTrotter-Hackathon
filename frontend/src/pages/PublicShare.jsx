@@ -114,7 +114,7 @@ export default function PublicShare() {
               <Calendar className="w-3.5 h-3.5" />
               {dateRange}
             </span>
-            <span className="px-2.5 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold">
+            <span className="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900/10 text-slate-200 text-xs font-semibold">
               {trip.durationDays} Days • {trip.travel_style}
             </span>
           </div>
@@ -134,7 +134,7 @@ export default function PublicShare() {
       {/* Grid Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-7 space-y-6">
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Daily Itinerary
           </h2>
           <Timeline days={trip.itineraryDays} />

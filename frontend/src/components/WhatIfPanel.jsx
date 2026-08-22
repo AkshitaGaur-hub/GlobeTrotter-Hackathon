@@ -112,7 +112,7 @@ export default function WhatIfPanel({
           {/* Budget Constraint */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+              <label className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                 New Target Budget (₹ INR)
               </label>
               <span className="text-base font-extrabold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg">
@@ -130,14 +130,14 @@ export default function WhatIfPanel({
             />
             <div className="flex justify-between text-[11px] text-slate-400 mt-1">
               <span>Budget: ₹8,000</span>
-              <span className="text-slate-600 font-semibold">Current: ₹{currentTrip?.budget?.toLocaleString("en-IN") || "25,000"}</span>
+              <span className="text-slate-600 dark:text-slate-400 font-semibold">Current: ₹{currentTrip?.budget?.toLocaleString("en-IN") || "25,000"}</span>
               <span>Luxury: ₹60,000+</span>
             </div>
           </div>
 
           {/* Duration Constraint */}
           <div>
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-2">
               Duration (Days)
             </label>
             <div className="grid grid-cols-4 gap-2">
@@ -149,7 +149,7 @@ export default function WhatIfPanel({
                   className={`py-2.5 rounded-xl border text-xs font-bold transition-all ${
                     duration === days
                       ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                      : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                      : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:bg-slate-800"
                   }`}
                 >
                   {days} Days
@@ -160,7 +160,7 @@ export default function WhatIfPanel({
 
           {/* Travel Style */}
           <div>
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-2">
               Travel Style
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -172,7 +172,7 @@ export default function WhatIfPanel({
                   className={`py-2.5 rounded-xl border text-xs font-bold transition-all ${
                     travelStyle === style
                       ? "bg-brand-500 text-white border-brand-600 shadow-sm"
-                      : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                      : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:bg-slate-800"
                   }`}
                 >
                   {style}
@@ -183,7 +183,7 @@ export default function WhatIfPanel({
 
           {/* Optional adjustments */}
           <div>
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
               Specific Adjustment or Preference (Optional)
             </label>
             <input
@@ -191,7 +191,7 @@ export default function WhatIfPanel({
               value={destinationAdjustment}
               onChange={(e) => setDestinationAdjustment(e.target.value)}
               placeholder="e.g. Focus only on Jaipur and Udaipur, reduce travel time"
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-slate-50/50"
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-slate-50 dark:bg-slate-800/50"
             />
           </div>
 
@@ -200,7 +200,7 @@ export default function WhatIfPanel({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-slate-600 text-xs font-semibold hover:bg-slate-100"
+              className="px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 text-xs font-semibold hover:bg-slate-100 dark:bg-slate-800"
             >
               Cancel
             </button>

@@ -387,3 +387,89 @@ export async function getPublicTrip(req, res, next) {
     next(err);
   }
 }
+
+export async function getCalendarTrips(req, res, next) {
+  try {
+    const result = await pool.query(
+      "SELECT id, name, start_date, end_date, description FROM trips WHERE user_id = $1",
+      [req.user.id]
+    );
+    res.json({ trips: result.rows });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function addTripActivity(req, res, next) {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+    const { stop_id, activity_id, scheduled_date, scheduled_time, cost_override, notes, name, description, cost, category } = req.body;
+    
+    const tripCheck = await client.query("SELECT id FROM trips WHERE id = $1 AND user_id = $2", [id, req.user.id]);
+    if (tripCheck.rows.length === 0) {
+      client.release();
+      return res.status(404).json({ error: "Trip not found" });
+    }
+    
+    let finalActivityId = activity_id;
+    if (!finalActivityId) {
+      const actRes = await client.query(
+        "INSERT INTO activities (name, description, cost, category) VALUES ($1, $2, $3, $4) RETURNING id",
+        [name, description, cost || 0, category || 'Other']
+      );
+      finalActivityId = actRes.rows[0].id;
+    }
+    
+    const maxOrderRes = await client.query("SELECT COALESCE(MAX(order_index), 0) + 1 as next_order FROM trip_activities WHERE stop_id = $1", [stop_id]);
+    const nextOrder = maxOrderRes.rows[0].next_order;
+
+    const insertRes = await client.query(
+      `INSERT INTO trip_activities (stop_id, activity_id, scheduled_date, scheduled_time, cost_override, order_index, notes)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [stop_id, finalActivityId, scheduled_date, scheduled_time, cost_override, nextOrder, notes || '']
+    );
+    res.status(201).json({ trip_activity: insertRes.rows[0] });
+  } catch (err) {
+    next(err);
+  } finally {
+    if (client) client.release();
+  }
+}
+
+export async function updateTripActivity(req, res, next) {
+  try {
+    const { id, activityId } = req.params;
+    const { scheduled_time, cost_override, order_index, notes } = req.body;
+
+    const tripCheck = await pool.query("SELECT id FROM trips WHERE id = $1 AND user_id = $2", [id, req.user.id]);
+    if (tripCheck.rows.length === 0) return res.status(404).json({ error: "Trip not found" });
+
+    const result = await pool.query(
+      `UPDATE trip_activities
+       SET scheduled_time = COALESCE($1, scheduled_time),
+           cost_override = COALESCE($2, cost_override),
+           order_index = COALESCE($3, order_index),
+           notes = COALESCE($4, notes)
+       WHERE id = $5 RETURNING *`,
+      [scheduled_time, cost_override, order_index, notes, activityId]
+    );
+    res.json({ trip_activity: result.rows[0] });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deleteTripActivity(req, res, next) {
+  try {
+    const { id, activityId } = req.params;
+    
+    const tripCheck = await pool.query("SELECT id FROM trips WHERE id = $1 AND user_id = $2", [id, req.user.id]);
+    if (tripCheck.rows.length === 0) return res.status(404).json({ error: "Trip not found" });
+
+    await pool.query("DELETE FROM trip_activities WHERE id = $1", [activityId]);
+    res.json({ message: "Trip activity deleted successfully" });
+  } catch (err) {
+    next(err);
+  }
+}

@@ -305,6 +305,211 @@ export const api = {
       throw err;
     }
   },
+  // Calendar
+  getCalendarTrips: async () => {
+    try {
+      return await request("/trips/calendar");
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        console.warn('Calendar API offline, using trip data fallback');
+        const trips = await api.getTrips();
+        return { trips: trips.trips || [] };
+      }
+      throw err;
+    }
+  },
+
+  // Community
+  getCommunityPosts: async (params = {}) => {
+    try {
+      const query = new URLSearchParams(params).toString();
+      return await request(`/community/posts${query ? `?${query}` : ""}`);
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { posts: [] };
+      }
+      throw err;
+    }
+  },
+  createPost: async (data) => {
+    try {
+      return await request("/community/posts", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { post: { id: Date.now(), ...data, likes: 0, comments: 0, created_at: new Date().toISOString(), user: { name: "Demo User" } } };
+      }
+      throw err;
+    }
+  },
+  updatePost: async (id, data) => {
+    try {
+      return await request(`/community/posts/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { post: { id, ...data } };
+      }
+      throw err;
+    }
+  },
+  deletePost: async (id) => {
+    try {
+      return await request(`/community/posts/${id}`, {
+        method: "DELETE",
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { message: "Deleted" };
+      }
+      throw err;
+    }
+  },
+  toggleLike: async (postId) => {
+    try {
+      return await request(`/community/posts/${postId}/like`, {
+        method: "POST",
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { message: "Liked" };
+      }
+      throw err;
+    }
+  },
+  getComments: async (postId) => {
+    try {
+      return await request(`/community/posts/${postId}/comments`);
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { comments: [] };
+      }
+      throw err;
+    }
+  },
+  addComment: async (postId, content) => {
+    try {
+      return await request(`/community/posts/${postId}/comments`, {
+        method: "POST",
+        body: JSON.stringify({ content }),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { comment: { id: Date.now(), content, created_at: new Date().toISOString(), user: { name: "Demo User" } } };
+      }
+      throw err;
+    }
+  },
+  deleteComment: async (id) => {
+    try {
+      return await request(`/community/comments/${id}`, {
+        method: "DELETE",
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { message: "Deleted" };
+      }
+      throw err;
+    }
+  },
+
+  // Trip Activities  
+  addTripActivity: async (tripId, data) => {
+    try {
+      return await request(`/trips/${tripId}/activities`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { activity: { id: Date.now(), ...data } };
+      }
+      throw err;
+    }
+  },
+  updateTripActivity: async (tripId, activityId, data) => {
+    try {
+      return await request(`/trips/${tripId}/activities/${activityId}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { activity: { id: activityId, ...data } };
+      }
+      throw err;
+    }
+  },
+  deleteTripActivity: async (tripId, activityId) => {
+    try {
+      return await request(`/trips/${tripId}/activities/${activityId}`, {
+        method: "DELETE",
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { message: "Deleted" };
+      }
+      throw err;
+    }
+  },
+
+  // Admin
+  getAdminStats: async () => {
+    try {
+      return await request("/admin/stats");
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { stats: { totalUsers: 150, totalTrips: 45, totalPosts: 120, totalComments: 340, totalExpenses: 15000 } };
+      }
+      throw err;
+    }
+  },
+  getAdminCharts: async () => {
+    try {
+      return await request("/admin/charts");
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { 
+          charts: { 
+            destinations: [{ name: "Paris", count: 12 }, { name: "Tokyo", count: 8 }], 
+            activity: [{ date: "2026-08-01", count: 2 }], 
+            expenses: [{ category: "Food", amount: 300 }], 
+            community: [{ date: "2026-08-01", count: 5 }] 
+          } 
+        };
+      }
+      throw err;
+    }
+  },
+
+  // Profile
+  updateProfile: async (data) => {
+    try {
+      return await request("/auth/profile", {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { user: { ...data } };
+      }
+      throw err;
+    }
+  },
+  getUserProfile: async (userId) => {
+    try {
+      return await request(`/users/${userId}/profile`);
+    } catch (err) {
+      if (err.name === "TypeError" || err.message.includes("fetch")) {
+        return { user: { id: userId, name: "Demo User", bio: "Loves traveling.", location: "Earth", travelStyle: "Budget" } };
+      }
+      throw err;
+    }
+  },
 };
 
 export default api;
