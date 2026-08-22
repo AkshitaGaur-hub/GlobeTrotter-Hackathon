@@ -15,6 +15,7 @@ import Calendar from "./pages/Calendar";
 import Community from "./pages/Community";
 import AdminDashboard from "./pages/AdminDashboard";
 import LoadingState from "./components/LoadingState";
+import ChatBot from "./components/ChatBot";
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, isLoading } = useAuth();
@@ -152,6 +153,8 @@ export default function App() {
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </main>
+
+          <ChatBot />
 
           <footer className="border-t border-slate-200/80 bg-white/70 py-6 text-center text-xs text-slate-500">
             <p>GlobeTrotter — Adaptive AI Travel Planner • Hackathon MVP Edition</p>
