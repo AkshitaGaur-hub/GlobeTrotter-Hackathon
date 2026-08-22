@@ -69,39 +69,55 @@ export default function ItineraryDetails() {
       const activeDay = updatedDays[activeTab];
       
       if (editingActivity) {
-        // Mock update
+        await api.updateTripActivity(id, editingActivity.id, {
+          scheduled_time: activityData.time,
+          cost_override: activityData.cost,
+          notes: activityData.notes,
+          name: activityData.name,
+          description: activityData.description
+        });
+        
         activeDay.activities = activeDay.activities.map(a => 
           a.id === editingActivity.id ? { ...a, ...activityData, cost: parseFloat(activityData.cost || 0) } : a
         );
-        // api call would be: await api.updateTripActivity(id, editingActivity.id, activityData)
       } else {
+        const res = await api.addTripActivity(id, {
+          stop_id: activeDay.stop_id || activeDay.id,
+          scheduled_date: activeDay.date,
+          scheduled_time: activityData.time,
+          name: activityData.name,
+          description: activityData.description,
+          cost: parseFloat(activityData.cost || 0),
+          notes: activityData.notes
+        });
+        
         const newAct = {
-          id: Date.now(),
+          id: res.trip_activity?.id || Date.now(),
           ...activityData,
           cost: parseFloat(activityData.cost || 0)
         };
         activeDay.activities.push(newAct);
-        // api call would be: await api.addTripActivity(id, newAct)
       }
       
       setItinerary(updatedDays);
       setIsModalOpen(false);
       setEditingActivity(null);
-      setActivityData({ name: "", time: "", description: "", cost: "", notes: "" });
     } catch (err) {
-      console.error(err);
+      console.error("Failed to save activity", err);
+      alert("Failed to save activity");
     }
   };
 
   const handleDeleteActivity = async (activityId) => {
     if (confirm("Are you sure you want to delete this activity?")) {
       try {
+        await api.deleteTripActivity(id, activityId);
         let updatedDays = [...itinerary];
         updatedDays[activeTab].activities = updatedDays[activeTab].activities.filter(a => a.id !== activityId);
         setItinerary(updatedDays);
-        // await api.deleteTripActivity(id, activityId);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to delete activity", err);
+        alert("Failed to delete activity");
       }
     }
   };

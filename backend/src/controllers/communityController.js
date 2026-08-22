@@ -7,11 +7,11 @@ export async function getPosts(req, res, next) {
     let baseQuery = `
       SELECT p.*,
         u.name as author_name, u.email as author_email, u.avatar_url as author_avatar,
-        (SELECT COUNT(*) FROM community_likes WHERE post_id = p.id) as like_count,
-        (SELECT COUNT(*) FROM community_comments WHERE post_id = p.id) as comment_count,
-        EXISTS(SELECT 1 FROM community_likes WHERE post_id = p.id AND user_id = $1) as user_liked
+        (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) as like_count,
+        (SELECT COUNT(*) FROM post_comments WHERE post_id = p.id) as comment_count,
+        EXISTS(SELECT 1 FROM post_likes WHERE post_id = p.id AND user_id = $1) as user_liked
       FROM community_posts p
-      JOIN users u ON p.author_id = u.id
+      JOIN users u ON p.user_id = u.id
       WHERE 1=1
     `;
     const params = [req.user.id];
@@ -46,7 +46,7 @@ export async function createPost(req, res, next) {
   try {
     const { destination, content, image_url } = req.body;
     const insertRes = await query(
-      `INSERT INTO community_posts (author_id, destination, content, image_url)
+      `INSERT INTO community_posts (user_id, destination, content, image_url)
        VALUES ($1, $2, $3, $4) RETURNING *`,
       [req.user.id, destination, content, image_url]
     );
@@ -61,9 +61,9 @@ export async function updatePost(req, res, next) {
     const { id } = req.params;
     const { destination, content, image_url } = req.body;
     
-    const postRes = await query("SELECT author_id FROM community_posts WHERE id = $1", [id]);
+    const postRes = await query("SELECT user_id FROM community_posts WHERE id = $1", [id]);
     if (postRes.rows.length === 0) return res.status(404).json({ error: "Post not found" });
-    if (postRes.rows[0].author_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
+    if (postRes.rows[0].user_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
 
     const updateRes = await query(
       `UPDATE community_posts
@@ -81,9 +81,9 @@ export async function deletePost(req, res, next) {
   try {
     const { id } = req.params;
     
-    const postRes = await query("SELECT author_id FROM community_posts WHERE id = $1", [id]);
+    const postRes = await query("SELECT user_id FROM community_posts WHERE id = $1", [id]);
     if (postRes.rows.length === 0) return res.status(404).json({ error: "Post not found" });
-    if (postRes.rows[0].author_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
+    if (postRes.rows[0].user_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
 
     await query("DELETE FROM community_posts WHERE id = $1", [id]);
     res.json({ message: "Post deleted successfully" });
@@ -96,17 +96,17 @@ export async function toggleLike(req, res, next) {
   try {
     const { id } = req.params;
     
-    const likeRes = await query("SELECT id FROM community_likes WHERE post_id = $1 AND user_id = $2", [id, req.user.id]);
+    const likeRes = await query("SELECT id FROM post_likes WHERE post_id = $1 AND user_id = $2", [id, req.user.id]);
     let liked = false;
     
     if (likeRes.rows.length > 0) {
-      await query("DELETE FROM community_likes WHERE post_id = $1 AND user_id = $2", [id, req.user.id]);
+      await query("DELETE FROM post_likes WHERE post_id = $1 AND user_id = $2", [id, req.user.id]);
     } else {
-      await query("INSERT INTO community_likes (post_id, user_id) VALUES ($1, $2)", [id, req.user.id]);
+      await query("INSERT INTO post_likes (post_id, user_id) VALUES ($1, $2)", [id, req.user.id]);
       liked = true;
     }
 
-    const countRes = await query("SELECT COUNT(*) FROM community_likes WHERE post_id = $1", [id]);
+    const countRes = await query("SELECT COUNT(*) FROM post_likes WHERE post_id = $1", [id]);
     res.json({ liked, like_count: parseInt(countRes.rows[0].count, 10) });
   } catch (err) {
     next(err);
@@ -118,8 +118,8 @@ export async function getComments(req, res, next) {
     const { id } = req.params;
     const commentsRes = await query(`
       SELECT c.*, u.name as author_name, u.avatar_url as author_avatar
-      FROM community_comments c
-      JOIN users u ON c.author_id = u.id
+      FROM post_comments c
+      JOIN users u ON c.user_id = u.id
       WHERE c.post_id = $1
       ORDER BY c.created_at ASC
     `, [id]);
@@ -135,7 +135,7 @@ export async function addComment(req, res, next) {
     const { content } = req.body;
     
     const insertRes = await query(
-      `INSERT INTO community_comments (post_id, author_id, content) VALUES ($1, $2, $3) RETURNING *`,
+      `INSERT INTO post_comments (post_id, user_id, content) VALUES ($1, $2, $3) RETURNING *`,
       [id, req.user.id, content]
     );
 
@@ -152,11 +152,11 @@ export async function deleteComment(req, res, next) {
   try {
     const { id } = req.params;
     
-    const commentRes = await query("SELECT author_id FROM community_comments WHERE id = $1", [id]);
+    const commentRes = await query("SELECT user_id FROM post_comments WHERE id = $1", [id]);
     if (commentRes.rows.length === 0) return res.status(404).json({ error: "Comment not found" });
-    if (commentRes.rows[0].author_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
+    if (commentRes.rows[0].user_id !== req.user.id) return res.status(403).json({ error: "Unauthorized" });
 
-    await query("DELETE FROM community_comments WHERE id = $1", [id]);
+    await query("DELETE FROM post_comments WHERE id = $1", [id]);
     res.json({ message: "Comment deleted successfully" });
   } catch (err) {
     next(err);
