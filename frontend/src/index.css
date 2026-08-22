@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-[#f5f1e8] text-slate-900 font-sans antialiased;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }

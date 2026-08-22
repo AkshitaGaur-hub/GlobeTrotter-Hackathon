@@ -7,7 +7,7 @@ export default function Timeline({ days = [] }) {
 
   if (!days || days.length === 0) {
     return (
-      <div className="bg-white rounded-2xl p-8 border border-slate-200 text-center text-slate-500">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 text-center text-slate-500 dark:text-slate-400">
         No itinerary activities scheduled yet.
       </div>
     );
@@ -34,7 +34,7 @@ export default function Timeline({ days = [] }) {
               className={`shrink-0 flex flex-col items-center px-4 py-2.5 rounded-xl text-left border transition-all duration-200 ${
                 isSelected
                   ? "bg-slate-900 text-white border-slate-900 shadow-md scale-[1.02]"
-                  : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                  : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:bg-slate-800"
               }`}
             >
               <span className={`text-[10px] font-extrabold uppercase tracking-wider ${isSelected ? "text-amber-400" : "text-slate-400"}`}>
@@ -43,7 +43,7 @@ export default function Timeline({ days = [] }) {
               <span className="text-xs font-bold whitespace-nowrap mt-0.5">
                 {formatDate(day.date)}
               </span>
-              <span className={`text-[11px] truncate max-w-[90px] ${isSelected ? "text-slate-300" : "text-slate-500"}`}>
+              <span className={`text-[11px] truncate max-w-[90px] ${isSelected ? "text-slate-300" : "text-slate-500 dark:text-slate-400"}`}>
                 {day.city}
               </span>
             </button>
@@ -70,13 +70,13 @@ export default function Timeline({ days = [] }) {
           </div>
         </div>
 
-        <div className="text-xs text-slate-300 bg-white/10 px-3 py-1.5 rounded-xl backdrop-blur-sm self-start sm:self-auto">
+        <div className="text-xs text-slate-300 bg-white dark:bg-slate-900/10 px-3 py-1.5 rounded-xl backdrop-blur-sm self-start sm:self-auto">
           {activeDay.activities?.length || 0} scheduled experiences
         </div>
       </div>
 
       {/* Activities Vertical Timeline */}
-      <div className="space-y-4 relative pl-4 border-l-2 border-slate-200 ml-2">
+      <div className="space-y-4 relative pl-4 border-l-2 border-slate-200 dark:border-slate-700 ml-2">
         {activeDay.activities && activeDay.activities.length > 0 ? (
           activeDay.activities.map((activity, aIdx) => (
             <div key={`act-${activity.id || aIdx}`} className="relative">
@@ -86,7 +86,7 @@ export default function Timeline({ days = [] }) {
             </div>
           ))
         ) : (
-          <div className="bg-white rounded-xl p-6 border border-slate-200 text-center text-slate-500 text-sm">
+          <div className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-700 text-center text-slate-500 dark:text-slate-400 text-sm">
             Free day for relaxation, spontaneous exploration, and local markets.
           </div>
         )}

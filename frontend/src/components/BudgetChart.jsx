@@ -24,14 +24,14 @@ export default function BudgetChart({ budgetData }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
           <ChartIcon className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-900">Cost Breakdown</h3>
-          <p className="text-xs text-slate-500">Distribution by expense category</p>
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">Cost Breakdown</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Distribution by expense category</p>
         </div>
       </div>
 
@@ -66,10 +66,10 @@ export default function BudgetChart({ budgetData }) {
               <div key={item.name} className="flex items-center justify-between text-xs py-1 border-b border-slate-50 last:border-none">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                  <span className="font-semibold text-slate-700">{item.name}</span>
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">{item.name}</span>
                 </div>
                 <div className="text-right">
-                  <span className="font-bold text-slate-900">{formatINR(item.value)}</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{formatINR(item.value)}</span>
                   <span className="text-slate-400 text-[11px] ml-1.5">({pct}%)</span>
                 </div>
               </div>

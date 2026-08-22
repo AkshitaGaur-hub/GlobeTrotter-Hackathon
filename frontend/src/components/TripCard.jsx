@@ -11,13 +11,13 @@ export default function TripCard({ trip, onDelete }) {
 
   const formatINR = (val) => "₹" + Math.round(val || 0).toLocaleString("en-IN");
 
-  const fallbackImage = "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80";
+  const fallbackImage = "https://picsum.photos/seed/globetrotter132/800/600";
   const coverImage = cities[0]?.image_url || fallbackImage;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
       {/* Cover Image Header */}
-      <div className="relative h-40 w-full overflow-hidden bg-slate-100">
+      <div className="relative h-40 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
         <img
           src={coverImage}
           alt={trip.name}
@@ -54,7 +54,7 @@ export default function TripCard({ trip, onDelete }) {
             {cities.map((c, i) => (
               <span
                 key={`c-${i}`}
-                className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-semibold flex items-center gap-1"
+                className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-semibold flex items-center gap-1"
               >
                 <MapPin className="w-2.5 h-2.5 text-slate-400" />
                 {c.name}
@@ -62,14 +62,14 @@ export default function TripCard({ trip, onDelete }) {
             ))}
           </div>
 
-          <div className="flex items-center justify-between text-xs py-2 border-t border-slate-100 text-slate-600">
+          <div className="flex items-center justify-between text-xs py-2 border-t border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400">
             <span>Estimated Total</span>
-            <span className="text-sm font-extrabold text-slate-900">{formatINR(trip.total_estimated_cost || trip.budget)}</span>
+            <span className="text-sm font-extrabold text-slate-900 dark:text-white">{formatINR(trip.total_estimated_cost || trip.budget)}</span>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 pt-3 mt-1 border-t border-slate-100">
+        <div className="flex items-center gap-2 pt-3 mt-1 border-t border-slate-100 dark:border-slate-800">
           <Link
             to={`/trips/${trip.id}`}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors"

@@ -28,9 +28,9 @@ export default function BeforeAfterCard({
   return (
     <div className="space-y-6">
       {/* Hero Savings Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 rounded-2xl p-6 text-white text-center shadow-lg shadow-emerald-600/20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-8 -translate-y-8" />
-        <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-extrabold uppercase tracking-wider mb-2">
+      <div className="bg-emerald-600 rounded-2xl p-6 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-white dark:bg-slate-900/10 rounded-full blur-2xl transform translate-x-8 -translate-y-8" />
+        <span className="inline-block px-3 py-1 rounded-full bg-white dark:bg-slate-900/20 backdrop-blur-md text-xs font-extrabold uppercase tracking-wider mb-2">
           Optimization Result
         </span>
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
@@ -44,36 +44,36 @@ export default function BeforeAfterCard({
       {/* Side-by-Side Comparison Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* BEFORE CARD */}
-        <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
+        <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700 mb-3">
             <span className="text-xs font-extrabold uppercase text-slate-400 tracking-wider">Before</span>
-            <span className="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-xs font-bold">
+            <span className="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-bold">
               Original Plan
             </span>
           </div>
 
           <div className="space-y-2.5 text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-500">Estimated Cost:</span>
-              <span className="font-bold text-slate-800 line-through text-rose-500">
+              <span className="text-slate-500 dark:text-slate-400">Estimated Cost:</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200 line-through text-rose-500">
                 {formatINR(before.total_estimated_cost)}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Budget Target:</span>
-              <span className="font-semibold text-slate-700">{formatINR(before.budget)}</span>
+              <span className="text-slate-500 dark:text-slate-400">Budget Target:</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-300">{formatINR(before.budget)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Duration:</span>
-              <span className="font-semibold text-slate-700">{before.durationDays} Days</span>
+              <span className="text-slate-500 dark:text-slate-400">Duration:</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-300">{before.durationDays} Days</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Cities Visited:</span>
-              <span className="font-semibold text-slate-700">{before.cities_count} Cities</span>
+              <span className="text-slate-500 dark:text-slate-400">Cities Visited:</span>
+              <span className="font-semibold text-slate-700 dark:text-slate-300">{before.cities_count} Cities</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500">GlobeScore:</span>
-              <span className="font-bold text-slate-700">{before.globe_score}/100</span>
+              <span className="text-slate-500 dark:text-slate-400">GlobeScore:</span>
+              <span className="font-bold text-slate-700 dark:text-slate-300">{before.globe_score}/100</span>
             </div>
           </div>
         </div>
@@ -93,25 +93,25 @@ export default function BeforeAfterCard({
 
           <div className="space-y-2.5 text-sm">
             <div className="flex justify-between">
-              <span className="text-slate-600">Estimated Cost:</span>
+              <span className="text-slate-600 dark:text-slate-400">Estimated Cost:</span>
               <span className="font-extrabold text-emerald-600 text-base">
                 {formatINR(after.total_estimated_cost)}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-600">New Target Budget:</span>
-              <span className="font-bold text-slate-800">{formatINR(after.budget)}</span>
+              <span className="text-slate-600 dark:text-slate-400">New Target Budget:</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">{formatINR(after.budget)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-600">Duration:</span>
-              <span className="font-semibold text-slate-800">{after.durationDays} Days</span>
+              <span className="text-slate-600 dark:text-slate-400">Duration:</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">{after.durationDays} Days</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-600">Cities Visited:</span>
-              <span className="font-semibold text-slate-800">{after.cities_count} Cities</span>
+              <span className="text-slate-600 dark:text-slate-400">Cities Visited:</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">{after.cities_count} Cities</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-600">GlobeScore:</span>
+              <span className="text-slate-600 dark:text-slate-400">GlobeScore:</span>
               <span className="font-extrabold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-md">
                 {after.globe_score}/100
               </span>
@@ -121,14 +121,14 @@ export default function BeforeAfterCard({
       </div>
 
       {/* "What Changed?" Rationale Section */}
-      <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200">
-        <h4 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-1.5">
+      <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
+        <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-1.5">
           <Sparkles className="w-4 h-4 text-brand-600" />
           <span>What Changed in this Adaptive Rebuild?</span>
         </h4>
         <div className="space-y-2">
           {what_changed.map((change, i) => (
-            <div key={`change-${i}`} className="flex items-start gap-2 text-xs font-medium text-slate-700">
+            <div key={`change-${i}`} className="flex items-start gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <span>{change}</span>
             </div>
@@ -142,7 +142,7 @@ export default function BeforeAfterCard({
           type="button"
           onClick={onCancel}
           disabled={isApplying}
-          className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition-colors"
+          className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-100 dark:bg-slate-800 transition-colors"
         >
           Keep Original
         </button>
@@ -151,7 +151,7 @@ export default function BeforeAfterCard({
           type="button"
           onClick={triggerCelebration}
           disabled={isApplying}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white text-sm font-bold shadow-lg shadow-brand-500/25 active:scale-95 transition-all"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors duration-200"
         >
           {isApplying ? (
             <>

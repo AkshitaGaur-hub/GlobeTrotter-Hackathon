@@ -20,22 +20,22 @@ export default function AIThinkingLoader({ title = "Generating your personalized
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 animate-fade-in">
-      <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 text-center relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden">
         {/* Glow background accent */}
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-brand-400/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl" />
 
         {/* Animated Compass Icon */}
-        <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-400 p-0.5 shadow-xl shadow-brand-500/25 mb-6 flex items-center justify-center">
-          <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+        <div className="relative mx-auto w-20 h-20 rounded-2xl bg-brand-600 p-0.5 mb-6 flex items-center justify-center">
+          <div className="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center">
             <Compass className="w-10 h-10 text-brand-600 animate-[spin_6s_linear_infinite]" />
           </div>
         </div>
 
-        <h3 className="text-xl font-extrabold text-slate-900 tracking-tight mb-2">
+        <h3 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
           {title}
         </h3>
-        <p className="text-xs text-slate-500 mb-6">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
           GlobeTrotter AI is tailoring activities, transit, and budget factors
         </p>
 
@@ -63,7 +63,7 @@ export default function AIThinkingLoader({ title = "Generating your personalized
                   ) : isCurrent ? (
                     <div className="w-4 h-4 rounded-full border-2 border-brand-600 border-t-transparent animate-spin" />
                   ) : (
-                    <div className="w-4 h-4 rounded-full border border-slate-300" />
+                    <div className="w-4 h-4 rounded-full border border-slate-300 dark:border-slate-600" />
                   )}
                 </div>
                 <span className="text-xs font-semibold leading-snug">{step.text}</span>

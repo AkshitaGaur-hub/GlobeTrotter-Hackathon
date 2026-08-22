@@ -31,15 +31,15 @@ export default function GlobeScore({ globeScoreData, compact = false }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <div className="p-2 rounded-xl bg-brand-50 text-brand-600">
             <Compass className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900">GlobeScore</h3>
-            <p className="text-xs text-slate-500">Trip efficiency & balance index</p>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">GlobeScore</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Trip efficiency & balance index</p>
           </div>
         </div>
         <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${colors.bg} ${colors.text} ${colors.border} border`}>
@@ -88,11 +88,11 @@ export default function GlobeScore({ globeScoreData, compact = false }) {
             const pct = Math.round((f.score / f.max) * 100);
             return (
               <div key={key}>
-                <div className="flex justify-between text-xs font-medium text-slate-700 mb-1">
+                <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
                   <span>{f.label}</span>
-                  <span className="text-slate-500 font-semibold">{f.score}/{f.max} pts</span>
+                  <span className="text-slate-500 dark:text-slate-400 font-semibold">{f.score}/{f.max} pts</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
                     className="h-2 rounded-full bg-gradient-to-r from-brand-500 to-amber-500 transition-all duration-500"
                     style={{ width: `${pct}%` }}
@@ -105,7 +105,7 @@ export default function GlobeScore({ globeScoreData, compact = false }) {
       </div>
 
       {/* Highlights & Warnings Checklist */}
-      <div className="mt-5 pt-4 border-t border-slate-100 space-y-1.5">
+      <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-1.5">
         {highlights.map((h, i) => (
           <div key={`h-${i}`} className="flex items-center gap-2 text-xs font-medium text-emerald-800">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
