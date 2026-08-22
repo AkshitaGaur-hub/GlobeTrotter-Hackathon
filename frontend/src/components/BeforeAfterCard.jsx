@@ -28,7 +28,7 @@ export default function BeforeAfterCard({
   return (
     <div className="space-y-6">
       {/* Hero Savings Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 rounded-2xl p-6 text-white text-center shadow-lg shadow-emerald-600/20 relative overflow-hidden">
+      <div className="bg-emerald-600 rounded-2xl p-6 text-white text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl transform translate-x-8 -translate-y-8" />
         <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-extrabold uppercase tracking-wider mb-2">
           Optimization Result
@@ -151,7 +151,7 @@ export default function BeforeAfterCard({
           type="button"
           onClick={triggerCelebration}
           disabled={isApplying}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 text-white text-sm font-bold shadow-lg shadow-brand-500/25 active:scale-95 transition-all"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors duration-200"
         >
           {isApplying ? (
             <>

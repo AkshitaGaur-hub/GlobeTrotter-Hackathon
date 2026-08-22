@@ -206,7 +206,7 @@ export default function WhatIfPanel({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-500 hover:to-amber-400 font-bold text-sm shadow-md shadow-brand-500/25 active:scale-95 transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white bg-brand-600 hover:bg-brand-700 font-semibold text-sm transition-colors duration-200"
             >
               <Sparkles className="w-4 h-4" />
               <span>Optimize My Trip</span>

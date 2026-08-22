@@ -244,6 +244,11 @@ The app will be available at **http://localhost:5173**
 - Generate shareable trip links
 - Read-only public itinerary view
 
+### 🎨 Refined UI & Dark Mode
+- Clean, subtle UI elements without heavy glowing effects
+- Toggle between Light and Dark mode seamlessly
+- Theme state persists across user sessions
+
 ---
 
 ## 👥 Team

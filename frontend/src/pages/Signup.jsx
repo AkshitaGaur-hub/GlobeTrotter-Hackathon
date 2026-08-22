@@ -44,7 +44,7 @@ export default function Signup() {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-3xl p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white mx-auto mb-3 shadow-md shadow-brand-500/20">
+          <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center text-white mx-auto mb-3">
             <Compass className="w-7 h-7" />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
