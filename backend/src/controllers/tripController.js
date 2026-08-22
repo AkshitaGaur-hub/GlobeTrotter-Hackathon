@@ -204,6 +204,14 @@ export async function createTrip(req, res, next) {
     const tripId = tripRes.rows[0].id;
     const stopIdMap = new Map();
 
+    if (stops.length === 0) {
+      stops.push({
+        city_id: null,
+        start_date: start_date,
+        end_date: end_date
+      });
+    }
+
     // Insert stops
     for (let i = 0; i < stops.length; i++) {
       const stop = stops[i];
@@ -404,12 +412,21 @@ export async function addTripActivity(req, res, next) {
   const client = await pool.connect();
   try {
     const { id } = req.params;
-    const { stop_id, activity_id, scheduled_date, scheduled_time, cost_override, notes, name, description, cost, category } = req.body;
+    let { stop_id, activity_id, scheduled_date, scheduled_time, cost_override, notes, name, description, cost, category } = req.body;
     
-    const tripCheck = await client.query("SELECT id FROM trips WHERE id = $1 AND user_id = $2", [id, req.user.id]);
+    const tripCheck = await client.query("SELECT id, start_date FROM trips WHERE id = $1 AND user_id = $2", [id, req.user.id]);
     if (tripCheck.rows.length === 0) {
       client.release();
       return res.status(404).json({ error: "Trip not found" });
+    }
+
+    if (!stop_id) {
+      const stopCheck = await client.query("SELECT id FROM stops WHERE trip_id = $1 ORDER BY order_index ASC LIMIT 1", [id]);
+      if (stopCheck.rows.length > 0) stop_id = stopCheck.rows[0].id;
+    }
+
+    if (!scheduled_date) {
+      scheduled_date = tripCheck.rows[0].start_date;
     }
     
     let finalActivityId = activity_id;

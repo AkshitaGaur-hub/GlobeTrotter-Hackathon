@@ -1,25 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search as SearchIcon, Filter, ListFilter, SlidersHorizontal, Plus, MapPin, Calendar, ArrowRight } from "lucide-react";
+import { Search as SearchIcon, Filter, ListFilter, SlidersHorizontal, Plus, MapPin, Calendar, ArrowRight, Award, Map, Navigation } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { api } from "../services/api";
 
 export default function Dashboard() {
+  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+
+  const [recentTrips, setRecentTrips] = useState([]);
+  const [stats, setStats] = useState({ totalTrips: 0, totalCountries: 0 });
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const res = await api.getTrips();
+        const trips = res.trips || [];
+        setRecentTrips(trips.slice(0, 3));
+        setStats({
+          totalTrips: trips.length,
+          totalCountries: new Set(trips.map(t => t.name)).size
+        });
+      } catch (err) {
+        console.error("Failed to load dashboard data", err);
+      }
+    };
+    fetchDashboardData();
+  }, []);
 
   const regionalSelections = [
-    { id: 1, name: "Europe", image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80' },
-    { id: 2, name: "Asia", image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80' },
-    { id: 3, name: "North America", image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80' },
-    { id: 4, name: "South America", image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80' },
-    { id: 5, name: "Africa", image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=800&q=80' }
-  ];
-
-  const previousTrips = [
-    { id: '1', title: 'Weekend Getaway', destination: 'New York, USA', startDate: '2026-05-10', endDate: '2026-05-13', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80' },
-    { id: '2', title: 'Summer in Paris', destination: 'Paris, France', startDate: '2025-07-01', endDate: '2025-07-15', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80' },
-    { id: '3', title: 'Tokyo Adventure', destination: 'Tokyo, Japan', startDate: '2024-10-10', endDate: '2024-10-24', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80' }
+    { id: 1, name: 'Europe', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=400&q=80' },
+    { id: 2, name: 'Asia', image: 'https://images.unsplash.com/photo-1535139262971-c51845709a48?auto=format&fit=crop&w=400&q=80' },
+    { id: 3, name: 'South America', image: 'https://images.unsplash.com/photo-1518182170546-076616fdfaaf?auto=format&fit=crop&w=400&q=80' },
+    { id: 4, name: 'North America', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e281d0c?auto=format&fit=crop&w=400&q=80' },
+    { id: 5, name: 'Africa', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=400&q=80' }
   ];
 
   const handleSearch = (e) => {
@@ -48,6 +63,17 @@ export default function Dashboard() {
           <p className="text-lg md:text-xl text-slate-100 max-w-2xl drop-shadow-md">
             Where will your next adventure take you?
           </p>
+          
+          <div className="flex items-center justify-center gap-6 mt-6">
+            <div className="flex flex-col items-center bg-black/30 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10">
+              <span className="text-2xl font-bold">{stats.totalTrips}</span>
+              <span className="text-sm text-slate-200">Trips Planned</span>
+            </div>
+            <div className="flex flex-col items-center bg-black/30 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10">
+              <span className="text-2xl font-bold">{stats.totalCountries}</span>
+              <span className="text-sm text-slate-200">Destinations</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -121,28 +147,29 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {previousTrips.map(trip => (
+            {recentTrips.length > 0 ? recentTrips.map(trip => (
               <Link 
                 key={trip.id} 
-                to={`/trips/${trip.id}`}
+                to={`/trips/${trip.share_slug || trip.id}`}
                 className="flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow group"
               >
                 <div className="h-48 w-full relative overflow-hidden">
-                  <img src={trip.image} alt={trip.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={trip.image_url || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80'} alt={trip.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 truncate group-hover:text-blue-600 transition-colors">{trip.title}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 truncate group-hover:text-blue-600 transition-colors">{trip.name}</h3>
                   <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm mb-1">
-                    <MapPin className="w-4 h-4 mr-2 text-slate-400 shrink-0" />
-                    <span className="truncate">{trip.destination}</span>
-                  </div>
-                  <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm">
                     <Calendar className="w-4 h-4 mr-2 text-slate-400 shrink-0" />
-                    <span>{new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}</span>
+                    <span>{new Date(trip.start_date).toLocaleDateString()} - {new Date(trip.end_date).toLocaleDateString()}</span>
                   </div>
                 </div>
               </Link>
-            ))}
+            )) : (
+              <div className="col-span-3 text-center py-10 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">
+                <p className="text-slate-500 dark:text-slate-400">You haven't planned any trips yet.</p>
+                <Link to="/trips/new" className="text-blue-600 font-medium hover:underline mt-2 inline-block">Start your first adventure</Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

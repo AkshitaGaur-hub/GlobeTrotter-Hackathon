@@ -5,7 +5,7 @@ export async function getStats(req, res, next) {
     const usersRes = await query("SELECT COUNT(*) as count FROM users");
     const tripsRes = await query("SELECT COUNT(*) as count FROM trips");
     const postsRes = await query("SELECT COUNT(*) as count FROM community_posts");
-    const commentsRes = await query("SELECT COUNT(*) as count FROM community_comments");
+    const commentsRes = await query("SELECT COUNT(*) as count FROM post_comments");
     
     const expensesRes = await query(`
       SELECT SUM(COALESCE(ta.cost_override, a.cost)) as total

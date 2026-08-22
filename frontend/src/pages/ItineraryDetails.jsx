@@ -33,7 +33,7 @@ export default function ItineraryDetails() {
       const itinRes = await api.getTripItinerary(id);
       
       // If we don't have well-formed days, create some based on duration
-      let days = itinRes.itinerary || [];
+      let days = itinRes.days || itinRes.itinerary || [];
       if (days.length === 0) {
         const duration = tripRes.trip.durationDays || 3;
         for (let i = 1; i <= duration; i++) {
