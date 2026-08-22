@@ -99,7 +99,7 @@ export default function PublicShare() {
         <button
           onClick={handleCopyTrip}
           disabled={isCopying}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-md transition-all active:scale-95 shrink-0"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition-all active:scale-95 shrink-0"
         >
           <Copy className="w-3.5 h-3.5" />
           <span>{isCopying ? "Cloning Trip..." : "Copy This Trip to My Account"}</span>

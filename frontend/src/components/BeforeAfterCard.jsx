@@ -79,14 +79,14 @@ export default function BeforeAfterCard({
         </div>
 
         {/* AFTER CARD */}
-        <div className="p-5 rounded-2xl bg-brand-50/50 border-2 border-brand-500 shadow-sm relative overflow-hidden">
+        <div className="p-5 rounded-2xl bg-blue-50/50 border-2 border-blue-500 shadow-sm relative overflow-hidden">
           <div className="absolute top-2 right-2">
             <Sparkles className="w-5 h-5 text-brand-500" />
           </div>
 
-          <div className="flex items-center justify-between pb-3 border-b border-brand-200/80 mb-3">
-            <span className="text-xs font-extrabold uppercase text-brand-700 tracking-wider">After</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-brand-500 text-white text-xs font-bold shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-blue-200/80 mb-3">
+            <span className="text-xs font-extrabold uppercase text-blue-700 tracking-wider">After</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-blue-500 text-white text-xs font-bold shadow-sm">
               Adaptive Rebuild ✨
             </span>
           </div>
@@ -123,7 +123,7 @@ export default function BeforeAfterCard({
       {/* "What Changed?" Rationale Section */}
       <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
         <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-brand-600" />
+          <Sparkles className="w-4 h-4 text-blue-600" />
           <span>What Changed in this Adaptive Rebuild?</span>
         </h4>
         <div className="space-y-2">
@@ -151,7 +151,7 @@ export default function BeforeAfterCard({
           type="button"
           onClick={triggerCelebration}
           disabled={isApplying}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-colors duration-200"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors duration-200"
         >
           {isApplying ? (
             <>

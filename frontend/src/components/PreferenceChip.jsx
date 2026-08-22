@@ -13,11 +13,11 @@ export default function PreferenceChip({
       onClick={onClick}
       className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all duration-200 active:scale-95 ${
         isSelected
-          ? "bg-brand-500 text-white border-brand-600"
+          ? "bg-blue-500 text-white border-blue-600"
           : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:bg-slate-800/80"
       }`}
     >
-      {Icon && <Icon className={`w-4 h-4 ${isSelected ? "text-white" : "text-brand-600"}`} />}
+      {Icon && <Icon className={`w-4 h-4 ${isSelected ? "text-white" : "text-blue-600"}`} />}
       <div className="text-left">
         <p className="leading-tight">{label}</p>
         {sublabel && (

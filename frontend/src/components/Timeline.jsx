@@ -81,7 +81,7 @@ export default function Timeline({ days = [] }) {
           activeDay.activities.map((activity, aIdx) => (
             <div key={`act-${activity.id || aIdx}`} className="relative">
               {/* Timeline marker */}
-              <div className="absolute -left-[23px] top-4 w-3.5 h-3.5 rounded-full bg-brand-500 ring-4 ring-white border border-brand-600" />
+              <div className="absolute -left-[23px] top-4 w-3.5 h-3.5 rounded-full bg-blue-500 ring-4 ring-white border border-blue-600" />
               <ActivityCard activity={activity} />
             </div>
           ))

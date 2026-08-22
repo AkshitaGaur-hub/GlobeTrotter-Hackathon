@@ -115,7 +115,7 @@ export default function WhatIfPanel({
               <label className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                 New Target Budget (₹ INR)
               </label>
-              <span className="text-base font-extrabold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg">
+              <span className="text-base font-extrabold text-blue-600 bg-blue-50 px-3 py-1 rounded-lg">
                 ₹{Number(budget).toLocaleString("en-IN")}
               </span>
             </div>
@@ -171,7 +171,7 @@ export default function WhatIfPanel({
                   onClick={() => setTravelStyle(style)}
                   className={`py-2.5 rounded-xl border text-xs font-bold transition-all ${
                     travelStyle === style
-                      ? "bg-brand-500 text-white border-brand-600 shadow-sm"
+                      ? "bg-blue-500 text-white border-blue-600 shadow-sm"
                       : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:bg-slate-800"
                   }`}
                 >
@@ -191,7 +191,7 @@ export default function WhatIfPanel({
               value={destinationAdjustment}
               onChange={(e) => setDestinationAdjustment(e.target.value)}
               placeholder="e.g. Focus only on Jaipur and Udaipur, reduce travel time"
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-slate-50 dark:bg-slate-800/50"
+              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-blue-500 bg-slate-50 dark:bg-slate-800/50"
             />
           </div>
 
@@ -206,7 +206,7 @@ export default function WhatIfPanel({
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white bg-brand-600 hover:bg-brand-700 font-semibold text-sm transition-colors duration-200"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white bg-blue-600 hover:bg-blue-700 font-semibold text-sm transition-colors duration-200"
             >
               <Sparkles className="w-4 h-4" />
               <span>Optimize My Trip</span>

@@ -89,7 +89,7 @@ export default function ActivityCard({ activity }) {
             <Clock className="w-3.5 h-3.5 text-slate-400" />
             <span>{formatDuration(activity.duration_minutes)}</span>
           </div>
-          <div className="text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded-md">
+          <div className="text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded-md">
             {formatCost(activity.cost_override ?? activity.cost)}
           </div>
         </div>

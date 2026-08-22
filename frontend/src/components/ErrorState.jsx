@@ -12,7 +12,7 @@ export default function ErrorState({ message = "An unexpected error occurred.", 
       {onRetry && (
         <button
           onClick={onRetry}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           <span>Try Again</span>

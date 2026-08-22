@@ -34,7 +34,7 @@ export default function GlobeScore({ globeScoreData, compact = false }) {
     <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-xl bg-brand-50 text-brand-600">
+          <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
             <Compass className="w-5 h-5" />
           </div>
           <div>

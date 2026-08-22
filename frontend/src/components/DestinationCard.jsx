@@ -52,9 +52,9 @@ export default function DestinationCard({ city }) {
 
         <button
           onClick={handlePlanHere}
-          className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100/80 transition-colors"
+          className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100/80 transition-colors"
         >
-          <Sparkles className="w-3.5 h-3.5 text-brand-600" />
+          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
           Plan Trip to {city.name}
         </button>
       </div>

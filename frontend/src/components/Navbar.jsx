@@ -59,7 +59,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/dashboard" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white transition-colors duration-200">
+              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white transition-colors duration-200">
                 <Compass className="w-6 h-6 animate-[spin_10s_linear_infinite]" />
               </div>
               <div>

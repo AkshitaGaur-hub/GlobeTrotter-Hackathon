@@ -43,7 +43,7 @@ export default function Login() {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-700/80 shadow-xl shadow-slate-200/50">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-brand-600 flex items-center justify-center text-white mx-auto mb-3">
+          <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white mx-auto mb-3">
             <Compass className="w-7 h-7" />
           </div>
           <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -90,7 +90,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-blue-500"
               />
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function Login() {
               </label>
               <span
                 onClick={() => alert("Password reset is not available in the hackathon demo.")}
-                className="text-[11px] text-brand-600 hover:underline cursor-pointer font-medium"
+                className="text-[11px] text-blue-600 hover:underline cursor-pointer font-medium"
               >
                 Forgot Password?
               </span>
@@ -115,7 +115,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-blue-500"
               />
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition-all active:scale-95"
+            className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all active:scale-95"
           >
             <span>{isSubmitting ? "Signing in..." : "Sign In"}</span>
             <ArrowRight className="w-4 h-4" />
@@ -132,7 +132,7 @@ export default function Login() {
 
         <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-brand-600 font-bold hover:underline">
+          <Link to="/signup" className="text-blue-600 font-bold hover:underline">
             Sign up now
           </Link>
         </div>

@@ -72,7 +72,7 @@ export default function TripCard({ trip, onDelete }) {
         <div className="flex items-center gap-2 pt-3 mt-1 border-t border-slate-100 dark:border-slate-800">
           <Link
             to={`/trips/${trip.id}`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors"
           >
             <span>View Itinerary</span>
             <ArrowRight className="w-3.5 h-3.5" />
