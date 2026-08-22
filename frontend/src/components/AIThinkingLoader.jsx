@@ -26,7 +26,7 @@ export default function AIThinkingLoader({ title = "Generating your personalized
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl" />
 
         {/* Animated Compass Icon */}
-        <div className="relative mx-auto w-20 h-20 rounded-2xl bg-gradient-to-tr from-brand-600 via-brand-500 to-amber-400 p-0.5 shadow-xl shadow-brand-500/25 mb-6 flex items-center justify-center">
+        <div className="relative mx-auto w-20 h-20 rounded-2xl bg-brand-600 p-0.5 mb-6 flex items-center justify-center">
           <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
             <Compass className="w-10 h-10 text-brand-600 animate-[spin_6s_linear_infinite]" />
           </div>

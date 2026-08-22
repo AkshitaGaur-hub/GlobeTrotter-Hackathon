@@ -148,7 +148,7 @@ export default function Dashboard() {
       {/* Floating Action Button */}
       <Link 
         to="/trips/new"
-        className="fixed bottom-8 right-8 z-50 flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 text-white font-bold rounded-full shadow-xl hover:bg-blue-700 hover:scale-105 transition-all active:scale-95"
+        className="fixed bottom-8 right-8 z-50 flex items-center justify-center gap-2 px-6 py-4 bg-brand-600 text-white font-semibold rounded-full shadow-lg hover:bg-brand-700 transition-colors"
       >
         <Plus className="w-5 h-5" />
         Plan a Trip
