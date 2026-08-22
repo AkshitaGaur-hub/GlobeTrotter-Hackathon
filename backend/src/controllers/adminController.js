@@ -59,7 +59,7 @@ export async function getCharts(req, res, next) {
         WHERE created_at >= NOW() - INTERVAL '12 weeks'
         UNION ALL
         SELECT to_char(created_at, 'IYYY-IW') as week, 0 as posts, 1 as comments
-        FROM community_comments
+        FROM post_comments
         WHERE created_at >= NOW() - INTERVAL '12 weeks'
       ) sub
       GROUP BY week

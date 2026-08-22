@@ -20,7 +20,7 @@ export default function AdminDashboard() {
         const statsRes = await api.getAdminStats();
         const chartsRes = await api.getAdminCharts();
         
-        setStats(statsRes.stats || { totalUsers: 150, totalTrips: 45, totalPosts: 120, totalComments: 340, totalExpenses: 15000 });
+        setStats(statsRes.totalUsers !== undefined ? statsRes : statsRes.stats || { totalUsers: 150, totalTrips: 45, totalPosts: 120, totalComments: 340, totalExpenses: 15000 });
         
         // Provide rich mock data if backend returned meager data
         const mockCharts = {
@@ -30,18 +30,31 @@ export default function AdminDashboard() {
           ],
           activity: [
             { date: "Mon", count: 5 }, { date: "Tue", count: 8 }, { date: "Wed", count: 12 },
-            { date: "Thu", count: 7 }, { date: "Fri", count: 15 }, { date: "Sat", count: 20 }, { date: "Sun", count: 25 }
+            { date: "Thu", count: 15 }, { date: "Fri", count: 20 }, { date: "Sat", count: 25 }, { date: "Sun", count: 18 }
           ],
           expenses: [
-            { category: "Flights", amount: 45000 }, { category: "Accommodation", amount: 35000 },
-            { category: "Food", amount: 15000 }, { category: "Activities", amount: 12000 }, { category: "Transport", amount: 8000 }
+            { name: "Accommodation", amount: 8500 }, { name: "Flights", amount: 12000 },
+            { name: "Food", amount: 4500 }, { name: "Activities", amount: 3200 }
           ],
           community: [
-            { name: "Posts", count: 120 }, { name: "Comments", count: 340 }, { name: "Likes", count: 890 }
+            { name: "Week 1", count: 45 }, { name: "Week 2", count: 52 },
+            { name: "Week 3", count: 38 }, { name: "Week 4", count: 65 }
           ]
         };
         
-        setCharts(chartsRes.charts?.destinations?.length > 2 ? chartsRes.charts : mockCharts);
+        let parsedCharts = mockCharts;
+        if (chartsRes.popularDestinations?.length > 0) {
+          parsedCharts = {
+            destinations: chartsRes.popularDestinations,
+            activity: chartsRes.tripActivity.map(x => ({ date: x.month, count: x.count })),
+            expenses: chartsRes.expenseOverview.map(x => ({ name: x.category, amount: x.total })),
+            community: chartsRes.communityActivity.map(x => ({ name: x.week, count: x.posts + x.comments }))
+          };
+        } else if (chartsRes.charts?.destinations?.length > 2) {
+          parsedCharts = chartsRes.charts;
+        }
+        
+        setCharts(parsedCharts);
       } catch (err) {
         console.error("Failed to fetch admin data:", err);
       } finally {
