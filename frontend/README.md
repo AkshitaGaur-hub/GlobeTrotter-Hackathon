@@ -472,6 +472,8 @@ The interface should dynamically adapt to different screen sizes and user trip f
 
 # 🛠️ Technology Stack
 
+> Update this section with the exact technologies used in your implementation.
+
 ### Frontend
 
 * React.js
@@ -482,24 +484,21 @@ The interface should dynamically adapt to different screen sizes and user trip f
 
 ### Backend
 
-* Python
-* FastAPI
-* REST APIs
-* SQLAlchemy
-* JWT Authentication
+* REST API
+* Server-side application
+* Authentication & authorization
 
 ### Database
 
-* PostgreSQL
 * Relational Database
+* Structured travel data relationships
 
 ### Development Tools
 
 * Git
 * GitHub
 * VS Code
-* Postman
-* Swagger / OpenAPI
+* API testing tools
 
 ---
 
