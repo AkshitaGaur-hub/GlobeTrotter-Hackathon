@@ -6,7 +6,7 @@ export default function DestinationCard({ city }) {
   const [imgError, setImgError] = useState(false);
   const navigate = useNavigate();
 
-  const fallbackImage = "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80";
+  const fallbackImage = "https://picsum.photos/seed/globetrotter131/800/600";
 
   const handlePlanHere = () => {
     navigate(`/trips/new?destination=${encodeURIComponent(city.name)}`);

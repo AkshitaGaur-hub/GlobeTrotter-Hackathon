@@ -11,7 +11,7 @@ export default function TripCard({ trip, onDelete }) {
 
   const formatINR = (val) => "₹" + Math.round(val || 0).toLocaleString("en-IN");
 
-  const fallbackImage = "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80";
+  const fallbackImage = "https://picsum.photos/seed/globetrotter132/800/600";
   const coverImage = cities[0]?.image_url || fallbackImage;
 
   return (

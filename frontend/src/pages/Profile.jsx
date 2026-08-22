@@ -8,13 +8,13 @@ export default function Profile() {
   
   // Placeholder data
   const preplannedTrips = [
-    { id: '1', title: 'Kyoto Escapade', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=300&q=80' },
-    { id: '2', title: 'Swiss Alps', image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=300&q=80' }
+    { id: '1', title: 'Kyoto Escapade', image: 'https://picsum.photos/seed/globetrotter112/800/600' },
+    { id: '2', title: 'Swiss Alps', image: 'https://picsum.photos/seed/globetrotter113/800/600' }
   ];
   
   const previousTrips = [
-    { id: '3', title: 'New York City', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=300&q=80' },
-    { id: '4', title: 'London Calling', image: 'https://images.unsplash.com/photo-1513635269975-59693e2d8400?auto=format&fit=crop&w=300&q=80' }
+    { id: '3', title: 'New York City', image: 'https://picsum.photos/seed/globetrotter114/800/600' },
+    { id: '4', title: 'London Calling', image: 'https://picsum.photos/seed/globetrotter115/800/600' }
   ];
 
   const SquareCard = ({ trip }) => (

@@ -9,17 +9,17 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const regionalSelections = [
-    { id: 1, name: "Europe", image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=300&q=80" },
-    { id: 2, name: "Asia", image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=300&q=80" },
-    { id: 3, name: "North America", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=300&q=80" },
-    { id: 4, name: "South America", image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=300&q=80" },
-    { id: 5, name: "Africa", image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=300&q=80" }
+    { id: 1, name: "Europe", image: "https://picsum.photos/seed/globetrotter100/800/600" },
+    { id: 2, name: "Asia", image: "https://picsum.photos/seed/globetrotter101/800/600" },
+    { id: 3, name: "North America", image: "https://picsum.photos/seed/globetrotter102/800/600" },
+    { id: 4, name: "South America", image: "https://picsum.photos/seed/globetrotter103/800/600" },
+    { id: 5, name: "Africa", image: "https://picsum.photos/seed/globetrotter104/800/600" }
   ];
 
   const previousTrips = [
-    { id: '1', title: 'Weekend Getaway', destination: 'New York, USA', startDate: '2026-05-10', endDate: '2026-05-13', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=400&q=80' },
-    { id: '2', title: 'Summer in Paris', destination: 'Paris, France', startDate: '2025-07-01', endDate: '2025-07-15', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80' },
-    { id: '3', title: 'Tokyo Adventure', destination: 'Tokyo, Japan', startDate: '2024-10-10', endDate: '2024-10-24', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80' }
+    { id: '1', title: 'Weekend Getaway', destination: 'New York, USA', startDate: '2026-05-10', endDate: '2026-05-13', image: 'https://picsum.photos/seed/globetrotter105/800/600' },
+    { id: '2', title: 'Summer in Paris', destination: 'Paris, France', startDate: '2025-07-01', endDate: '2025-07-15', image: 'https://picsum.photos/seed/globetrotter106/800/600' },
+    { id: '3', title: 'Tokyo Adventure', destination: 'Tokyo, Japan', startDate: '2024-10-10', endDate: '2024-10-24', image: 'https://picsum.photos/seed/globetrotter107/800/600' }
   ];
 
   const handleSearch = (e) => {
@@ -34,7 +34,7 @@ export default function Dashboard() {
       {/* Hero Banner */}
       <div className="relative h-[40vh] min-h-[300px] w-full bg-slate-900 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1920&q=80" 
+          src="https://picsum.photos/seed/globetrotter108/800/600" 
           alt="Travel Hero" 
           className="absolute inset-0 w-full h-full object-cover opacity-60"
         />

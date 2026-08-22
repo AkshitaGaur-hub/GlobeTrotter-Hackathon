@@ -5,15 +5,15 @@ import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 export default function MyTrips() {
   // Placeholder data for UI purposes
   const ongoingTrips = [
-    { id: '1', title: 'European Summer Tour', destination: 'Paris, France', startDate: '2026-08-20', endDate: '2026-09-05', status: 'Ongoing', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80' }
+    { id: '1', title: 'European Summer Tour', destination: 'Paris, France', startDate: '2026-08-20', endDate: '2026-09-05', status: 'Ongoing', image: 'https://picsum.photos/seed/globetrotter109/800/600' }
   ];
   
   const upcomingTrips = [
-    { id: '2', title: 'Japan Cherry Blossom', destination: 'Tokyo, Japan', startDate: '2027-03-25', endDate: '2027-04-10', status: 'Upcoming', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80' }
+    { id: '2', title: 'Japan Cherry Blossom', destination: 'Tokyo, Japan', startDate: '2027-03-25', endDate: '2027-04-10', status: 'Upcoming', image: 'https://picsum.photos/seed/globetrotter110/800/600' }
   ];
   
   const completedTrips = [
-    { id: '3', title: 'Weekend Getaway', destination: 'New York, USA', startDate: '2026-05-10', endDate: '2026-05-13', status: 'Completed', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=400&q=80' }
+    { id: '3', title: 'Weekend Getaway', destination: 'New York, USA', startDate: '2026-05-10', endDate: '2026-05-13', status: 'Completed', image: 'https://picsum.photos/seed/globetrotter111/800/600' }
   ];
 
   const TripSection = ({ title, trips }) => (

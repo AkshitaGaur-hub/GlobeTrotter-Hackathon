@@ -32,7 +32,7 @@ export default function ActivityCard({ activity }) {
     return hours % 1 === 0 ? `${hours}h` : `${hours.toFixed(1)}h`;
   };
 
-  const fallbackImage = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80";
+  const fallbackImage = "https://picsum.photos/seed/globetrotter130/800/600";
 
   return (
     <div className="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col sm:flex-row gap-4">
