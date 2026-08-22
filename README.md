@@ -2,7 +2,7 @@
 
 ### ✈️ Empowering Personalized Travel Planning
 
-> **Plan smarter. Travel better. Explore more.**
+> **Plan Smarter. Explore more. Travel more **
 
 GlobeTrotter is a personalized, interactive, and collaborative travel planning platform designed to simplify the complexity of planning **multi-city trips**.
 
