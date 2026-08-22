@@ -93,7 +93,11 @@ export default function Dashboard() {
           </div>
           <div className="flex overflow-x-auto gap-4 pb-6 snap-x hide-scrollbar">
             {regionalSelections.map((region) => (
-              <div key={region.id} className="snap-start shrink-0 cursor-pointer group">
+              <div 
+                key={region.id} 
+                onClick={() => navigate(`/search?q=${encodeURIComponent(region.name)}`)}
+                className="snap-start shrink-0 cursor-pointer group"
+              >
                 <div className="w-40 h-40 rounded-2xl overflow-hidden relative shadow-sm border border-slate-200">
                   <img src={region.image} alt={region.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
