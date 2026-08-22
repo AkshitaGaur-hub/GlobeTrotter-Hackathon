@@ -32,8 +32,8 @@ export default function Dashboard() {
   const regionalSelections = [
     { id: 1, name: 'Europe', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=400&q=80' },
     { id: 2, name: 'Asia', image: 'https://images.unsplash.com/photo-1535139262971-c51845709a48?auto=format&fit=crop&w=400&q=80' },
-    { id: 3, name: 'South America', image: 'https://images.unsplash.com/photo-1518182170546-076616fdfaaf?auto=format&fit=crop&w=400&q=80' },
-    { id: 4, name: 'North America', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e281d0c?auto=format&fit=crop&w=400&q=80' },
+    { id: 3, name: 'North America', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80' },
+    { id: 4, name: 'South America', image: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80' },
     { id: 5, name: 'Africa', image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=400&q=80' }
   ];
 
