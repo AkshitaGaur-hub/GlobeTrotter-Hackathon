@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, MapPin, Sparkles, Navigation, ArrowRight } from "lucide-react";
+import { api } from "../services/api";
 
 export default function TripPlanner() {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ export default function TripPlanner() {
     startDate: "",
     endDate: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Placeholder suggestions
   const suggestions = [
@@ -20,11 +23,26 @@ export default function TripPlanner() {
     { id: 6, title: 'Northern Lights', type: 'Experience', image: 'https://images.unsplash.com/photo-1579033461387-9bb3a6479713?auto=format&fit=crop&w=800&q=80' },
   ];
 
-  const handleCreateTrip = (e) => {
+  const handleCreateTrip = async (e) => {
     e.preventDefault();
-    // Normally we would save to API here, then route to the itinerary builder
-    // Using a fake ID for now
-    navigate(`/trips/new-123`);
+    if (!formData.destination || !formData.startDate || !formData.endDate) return;
+    
+    setIsSubmitting(true);
+    try {
+      const res = await api.createTrip({
+        name: formData.destination,
+        start_date: formData.startDate,
+        end_date: formData.endDate,
+        description: `My trip to ${formData.destination}`,
+        budget: 5000,
+        travelers_count: 1
+      });
+      navigate(`/trips/${res.trip.id || res.trip.share_slug}`);
+    } catch (err) {
+      console.error("Failed to create trip:", err);
+      alert("Failed to create trip. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const handleSuggestionClick = (title) => {
@@ -103,9 +121,10 @@ export default function TripPlanner() {
           <div className="pt-4 flex justify-end">
             <button
               type="submit"
-              className="flex items-center gap-2 px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors"
+              disabled={isSubmitting}
+              className={`flex items-center gap-2 px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl transition-colors ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
             >
-              Start Planning <ArrowRight className="w-5 h-5" />
+              {isSubmitting ? 'Creating Trip...' : 'Start Planning'} {!isSubmitting && <ArrowRight className="w-5 h-5" />}
             </button>
           </div>
         </form>
