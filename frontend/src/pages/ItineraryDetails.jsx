@@ -57,8 +57,8 @@ export default function ItineraryDetails() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Trip Itinerary</h1>
-          <p className="text-slate-500 mt-1 flex items-center">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Trip Itinerary</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1 flex items-center">
             <MapPin className="w-4 h-4 mr-1" /> Multi-City Journey
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function ItineraryDetails() {
             <DollarSign className="w-4 h-4 mr-1" />
             Total Budget: ${totalBudget.toFixed(2)}
           </div>
-          <button className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Share Trip">
+          <button className="p-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Share Trip">
             <Share2 className="w-5 h-5" />
           </button>
           <button className="flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
@@ -80,11 +80,11 @@ export default function ItineraryDetails() {
       {/* Sections List */}
       <div className="space-y-6">
         {sections.map((section, index) => (
-          <div key={section.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col md:flex-row gap-6 relative group">
+          <div key={section.id} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 flex flex-col md:flex-row gap-6 relative group">
             
             {/* Drag Handle & Delete (Desktop) */}
             <div className="hidden md:flex flex-col items-center justify-between py-2 text-slate-300">
-              <GripVertical className="w-5 h-5 cursor-grab hover:text-slate-500" />
+              <GripVertical className="w-5 h-5 cursor-grab hover:text-slate-500 dark:text-slate-400" />
               <button 
                 onClick={() => removeSection(section.id)}
                 className="text-slate-300 hover:text-red-500 transition-colors mt-auto"
@@ -100,7 +100,7 @@ export default function ItineraryDetails() {
                   type="text"
                   value={section.title}
                   onChange={(e) => updateSection(section.id, 'title', e.target.value)}
-                  className="text-xl font-bold text-slate-900 border-none p-0 focus:ring-0 bg-transparent hover:bg-slate-50 rounded px-2 -ml-2 transition-colors w-1/2"
+                  className="text-xl font-bold text-slate-900 dark:text-white border-none p-0 focus:ring-0 bg-transparent hover:bg-slate-50 dark:bg-slate-800 rounded px-2 -ml-2 transition-colors w-1/2"
                 />
                 {/* Mobile delete */}
                 <button 
@@ -112,19 +112,19 @@ export default function ItineraryDetails() {
               </div>
 
               <div className="space-y-2">
-                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Description & Plans</label>
+                <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Description & Plans</label>
                 <textarea
                   value={section.description}
                   onChange={(e) => updateSection(section.id, 'description', e.target.value)}
                   rows="3"
-                  className="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                  className="w-full p-3 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 focus:bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                   placeholder="What are the main activities for this section?"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Date Range</label>
+                  <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date Range</label>
                   <div className="flex items-center space-x-2">
                     <div className="relative flex-1">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -134,7 +134,7 @@ export default function ItineraryDetails() {
                         type="date"
                         value={section.startDate}
                         onChange={(e) => updateSection(section.id, 'startDate', e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full pl-9 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <span className="text-slate-400">to</span>
@@ -143,14 +143,14 @@ export default function ItineraryDetails() {
                         type="date"
                         value={section.endDate}
                         onChange={(e) => updateSection(section.id, 'endDate', e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Section Budget</label>
+                  <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Section Budget</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <DollarSign className="w-4 h-4 text-slate-400" />
@@ -160,7 +160,7 @@ export default function ItineraryDetails() {
                       value={section.budget}
                       onChange={(e) => updateSection(section.id, 'budget', e.target.value)}
                       placeholder="0.00"
-                      className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-9 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function ItineraryDetails() {
 
       <button 
         onClick={addSection}
-        className="mt-8 w-full py-4 border-2 border-dashed border-slate-300 rounded-2xl text-slate-500 font-medium hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 flex items-center justify-center transition-all"
+        className="mt-8 w-full py-4 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl text-slate-500 dark:text-slate-400 font-medium hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 flex items-center justify-center transition-all"
       >
         <Plus className="w-5 h-5 mr-2" />
         Add another Section

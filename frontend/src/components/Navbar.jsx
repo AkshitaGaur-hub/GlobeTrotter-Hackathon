@@ -44,7 +44,7 @@ export default function Navbar() {
       className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
         location.pathname === to
           ? "text-blue-600 bg-blue-50"
-          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+          : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800"
       }`}
     >
       {Icon && <Icon className="w-4 h-4" />}
@@ -53,7 +53,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <nav className="sticky top-0 z-40 bg-white dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
@@ -74,7 +74,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
@@ -96,7 +96,7 @@ export default function Navbar() {
                 
                 <div className="relative ml-2 group">
                   <button className="flex items-center gap-2 focus:outline-none">
-                    <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
+                    <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300 dark:border-slate-600">
                       <img 
                         src={`https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=0D8ABC&color=fff`} 
                         alt="Avatar" 
@@ -104,13 +104,13 @@ export default function Navbar() {
                     </div>
                   </button>
                   {/* Dropdown */}
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right">
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-100 dark:border-slate-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right">
                     <div className="p-2">
-                      <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                        <p className="text-sm font-medium text-slate-900 truncate">{user?.name}</p>
-                        <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                      <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800 mb-1">
+                        <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{user?.name}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
                       </div>
-                      <Link to="/profile" className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg transition-colors">
+                      <Link to="/profile" className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-slate-800 rounded-lg transition-colors">
                         <User className="w-4 h-4 text-slate-400" />
                         Profile
                       </Link>
@@ -127,7 +127,7 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/login" className="text-slate-600 hover:text-slate-900 font-medium px-3 py-2">
+                <Link to="/login" className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white font-medium px-3 py-2">
                   Log in
                 </Link>
                 <Link

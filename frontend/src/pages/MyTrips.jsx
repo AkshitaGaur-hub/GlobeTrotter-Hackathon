@@ -18,28 +18,28 @@ export default function MyTrips() {
 
   const TripSection = ({ title, trips }) => (
     <div className="mb-10">
-      <h2 className="text-xl font-bold text-slate-800 mb-4">{title}</h2>
+      <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">{title}</h2>
       {trips.length === 0 ? (
-        <p className="text-slate-500 italic">No trips in this section.</p>
+        <p className="text-slate-500 dark:text-slate-400 italic">No trips in this section.</p>
       ) : (
         <div className="flex flex-col space-y-4">
           {trips.map(trip => (
             <Link 
               key={trip.id} 
               to={`/trips/${trip.id}`}
-              className="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group"
+              className="flex flex-col sm:flex-row bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-shadow group"
             >
               <div className="sm:w-48 h-32 sm:h-auto shrink-0">
                 <img src={trip.image} alt={trip.title} className="w-full h-full object-cover" />
               </div>
               <div className="p-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{trip.title}</h3>
-                  <div className="flex items-center text-slate-500 text-sm mt-1">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">{trip.title}</h3>
+                  <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm mt-1">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span>{trip.destination}</span>
                   </div>
-                  <div className="flex items-center text-slate-500 text-sm mt-1">
+                  <div className="flex items-center text-slate-500 dark:text-slate-400 text-sm mt-1">
                     <Calendar className="w-4 h-4 mr-1" />
                     <span>{new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}</span>
                   </div>
@@ -60,7 +60,7 @@ export default function MyTrips() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-900">Trip Listing</h1>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Trip Listing</h1>
         <Link to="/trips/new" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
           + Plan a Trip
         </Link>

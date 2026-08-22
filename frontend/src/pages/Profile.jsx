@@ -18,13 +18,13 @@ export default function Profile() {
   ];
 
   const SquareCard = ({ trip }) => (
-    <div className="flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-40 shrink-0">
+    <div className="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden w-40 shrink-0">
       <div className="h-32 w-full">
         <img src={trip.image} alt={trip.title} className="w-full h-full object-cover" />
       </div>
       <div className="p-3">
-        <h3 className="font-semibold text-slate-800 text-sm truncate">{trip.title}</h3>
-        <Link to={`/trips/${trip.id}`} className="mt-2 block text-center py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors">
+        <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm truncate">{trip.title}</h3>
+        <Link to={`/trips/${trip.id}`} className="mt-2 block text-center py-1.5 text-xs font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-lg transition-colors">
           View
         </Link>
       </div>
@@ -34,7 +34,7 @@ export default function Profile() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       {/* Profile Header section */}
-      <div className="flex flex-col md:flex-row gap-8 bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-10">
+      <div className="flex flex-col md:flex-row gap-8 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 mb-10">
         <div className="flex flex-col items-center justify-center shrink-0">
           <div className="w-32 h-32 rounded-full bg-slate-200 overflow-hidden mb-4 border-4 border-white shadow-md">
             <img 
@@ -43,36 +43,36 @@ export default function Profile() {
               className="w-full h-full object-cover"
             />
           </div>
-          <button className="text-sm font-medium text-slate-600 flex items-center hover:text-blue-600">
+          <button className="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center hover:text-blue-600">
             <Edit2 className="w-4 h-4 mr-1" /> Change Avatar
           </button>
         </div>
         
         <div className="flex-1">
           <div className="flex justify-between items-start mb-4">
-            <h1 className="text-2xl font-bold text-slate-900">Personal Details</h1>
-            <button className="px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Personal Details</h1>
+            <button className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:bg-slate-800 transition-colors">
               Edit Profile
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-              <div className="text-slate-900 font-medium">{user?.name || 'Jane Doe'}</div>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Full Name</label>
+              <div className="text-slate-900 dark:text-white font-medium">{user?.name || 'Jane Doe'}</div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Email Address</label>
-              <div className="text-slate-900 font-medium">{user?.email || 'jane@example.com'}</div>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Email Address</label>
+              <div className="text-slate-900 dark:text-white font-medium">{user?.email || 'jane@example.com'}</div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Location</label>
-              <div className="text-slate-900 font-medium flex items-center">
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Location</label>
+              <div className="text-slate-900 dark:text-white font-medium flex items-center">
                 <MapPin className="w-4 h-4 mr-1 text-slate-400" /> San Francisco, CA
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Travel Style</label>
-              <div className="text-slate-900 font-medium">Adventure, Budget</div>
+              <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Travel Style</label>
+              <div className="text-slate-900 dark:text-white font-medium">Adventure, Budget</div>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function Profile() {
 
       {/* Trips Sections */}
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Preplanned Trips</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Preplanned Trips</h2>
         <div className="flex overflow-x-auto gap-4 pb-4 snap-x">
           {preplannedTrips.map(trip => (
             <div key={trip.id} className="snap-start">
@@ -88,14 +88,14 @@ export default function Profile() {
             </div>
           ))}
           {/* Add blank slot */}
-          <div className="snap-start flex flex-col bg-slate-50 rounded-xl shadow-sm border border-dashed border-slate-300 overflow-hidden w-40 shrink-0 justify-center items-center h-[202px] hover:bg-slate-100 cursor-pointer transition-colors">
+          <div className="snap-start flex flex-col bg-slate-50 dark:bg-slate-800 rounded-xl shadow-sm border border-dashed border-slate-300 dark:border-slate-600 overflow-hidden w-40 shrink-0 justify-center items-center h-[202px] hover:bg-slate-100 dark:bg-slate-800 cursor-pointer transition-colors">
              <span className="text-slate-400 font-medium text-sm">+ Add New</span>
           </div>
         </div>
       </div>
 
       <div>
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Previous Trips</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Previous Trips</h2>
         <div className="flex overflow-x-auto gap-4 pb-4 snap-x">
           {previousTrips.map(trip => (
             <div key={trip.id} className="snap-start">

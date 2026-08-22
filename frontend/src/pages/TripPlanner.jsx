@@ -34,16 +34,16 @@ export default function TripPlanner() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-slate-900 mb-3">Plan a New Trip</h1>
-        <p className="text-slate-600">Enter your destination and dates to get started.</p>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Plan a New Trip</h1>
+        <p className="text-slate-600 dark:text-slate-400">Enter your destination and dates to get started.</p>
       </div>
 
       {/* Main Form */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 mb-12">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 mb-12">
         <form onSubmit={handleCreateTrip} className="space-y-6">
           
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
               Where do you want to go?
             </label>
             <div className="relative">
@@ -54,7 +54,7 @@ export default function TripPlanner() {
                 type="text"
                 required
                 placeholder="e.g., Tokyo, Japan or Multiple Cities"
-                className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={formData.destination}
                 onChange={(e) => setFormData({...formData, destination: e.target.value})}
               />
@@ -63,7 +63,7 @@ export default function TripPlanner() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-700">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
                 Start Date
               </label>
               <div className="relative">
@@ -73,7 +73,7 @@ export default function TripPlanner() {
                 <input
                   type="date"
                   required
-                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   value={formData.startDate}
                   onChange={(e) => setFormData({...formData, startDate: e.target.value})}
                 />
@@ -81,7 +81,7 @@ export default function TripPlanner() {
             </div>
             
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-700">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
                 End Date
               </label>
               <div className="relative">
@@ -91,7 +91,7 @@ export default function TripPlanner() {
                 <input
                   type="date"
                   required
-                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   value={formData.endDate}
                   onChange={(e) => setFormData({...formData, endDate: e.target.value})}
                   min={formData.startDate}
@@ -115,7 +115,7 @@ export default function TripPlanner() {
       <div>
         <div className="flex items-center gap-2 mb-6">
           <Sparkles className="w-5 h-5 text-amber-500" />
-          <h2 className="text-xl font-bold text-slate-900">Suggestions for Places to Visit / Activities</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Suggestions for Places to Visit / Activities</h2>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -123,7 +123,7 @@ export default function TripPlanner() {
             <div 
               key={item.id} 
               onClick={() => handleSuggestionClick(item.title)}
-              className="group cursor-pointer bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all hover:border-blue-300"
+              className="group cursor-pointer bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-all hover:border-blue-300"
             >
               <div className="h-40 w-full overflow-hidden">
                 <img 
@@ -134,7 +134,7 @@ export default function TripPlanner() {
               </div>
               <div className="p-4">
                 <div className="text-xs font-semibold text-blue-600 mb-1 tracking-wider uppercase">{item.type}</div>
-                <h3 className="font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{item.title}</h3>
+                <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-blue-700 transition-colors">{item.title}</h3>
               </div>
             </div>
           ))}
