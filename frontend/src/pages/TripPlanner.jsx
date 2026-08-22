@@ -19,8 +19,8 @@ export default function TripPlanner() {
     { id: 2, title: 'Colosseum', type: 'Historical', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80' },
     { id: 3, title: 'Santorini', type: 'City', image: 'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=800&q=80' },
     { id: 4, title: 'Grand Canyon', type: 'Nature', image: 'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=800&q=80' },
-    { id: 5, title: 'Taj Mahal', type: 'Attraction', image: 'https://images.unsplash.com/photo-1564507592208-028bb465c14f?auto=format&fit=crop&w=800&q=80' },
-    { id: 6, title: 'Northern Lights', type: 'Experience', image: 'https://images.unsplash.com/photo-1579033461387-9bb3a6479713?auto=format&fit=crop&w=800&q=80' },
+    { id: 5, title: 'Taj Mahal', type: 'Attraction', image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80' },
+    { id: 6, title: 'Northern Lights', type: 'Experience', image: 'https://images.unsplash.com/photo-1520769945061-0a448c463865?auto=format&fit=crop&w=800&q=80' },
   ];
 
   const handleCreateTrip = async (e) => {
